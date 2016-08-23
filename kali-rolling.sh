@@ -51,12 +51,12 @@ fi
 ##### Location information
 keyboardApple=false         # Using a Apple/Macintosh keyboard (non VM)?                [ --osx ]
 keyboardLayout=""           # Set keyboard layout                                       [ --keyboard gb]
-timezone=""                 # Set timezone location                                     [ --timezone Europe/London ]
+timezone="America/Chicago"  # Set timezone location                                     [ --timezone Europe/London ]
 
 ##### Optional steps
 burpFree=false              # Disable configuring Burp Suite (for Burp Pro users...)    [ --burp ]
 hardenDNS=false             # Set static & lock DNS name server                         [ --dns ]
-openVAS=false               # Install & configure OpenVAS (not everyone wants it...)    [ --openvas ]
+openVAS=tru                 # Install & configure OpenVAS (not everyone wants it...)    [ --openvas ]
 
 ##### (Optional) Enable debug mode?
 #set -x
@@ -171,6 +171,7 @@ if [[ $(which gnome-shell) ]]; then
   (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Disabling ${GREEN}screensaver${RESET}"
   xset s 0 0
   xset s off
+  echo "xset s off\n" >> /root/.xinitrc
   gsettings set org.gnome.desktop.session idle-delay 0
 else
   echo -e "\n\n ${YELLOW}[i]${RESET} ${YELLOW}Skipping disabling package updater${RESET}..."
@@ -296,9 +297,9 @@ if [[ "${hardenDNS}" != "false" ]]; then
   file=/etc/resolv.conf; [ -e "${file}" ] && cp -n $file{,.bkup}
   chattr -i "${file}" 2>/dev/null
   #--- Use OpenDNS DNS
-  echo -e 'nameserver 208.67.222.222\nnameserver 208.67.220.220' > "${file}"
+  #echo -e 'nameserver 208.67.222.222\nnameserver 208.67.220.220' > "${file}"
   #--- Use Google DNS
-  #echo -e 'nameserver 8.8.8.8\nnameserver 8.8.4.4' > "${file}"
+  echo -e 'nameserver 8.8.8.8\nnameserver 8.8.4.4' > "${file}"
   #--- Protect it
   chattr +i "${file}" 2>/dev/null
 else
@@ -754,7 +755,7 @@ wallpaper="\$(shuf -n1 -e \$(find /usr/share/wallpapers/ -maxdepth 1 -name 'kali
 #[[ $(which gnome-shell) ]] \
 #  && dconf write /org/gnome/desktop/background/picture-uri "'file://\${wallpaper}'"                              # GNOME - Desktop wallpaper
 
-/usr/bin/dconf write /org/gnome/desktop/screensaver/picture-uri "'file://\${wallpaper}'"                          # Change lock wallpaper (before swipe) - kali 2 & rolling
+# /usr/bin/dconf write /org/gnome/desktop/screensaver/picture-uri "'file://\${wallpaper}'"                          # Change lock wallpaper (before swipe) - kali 2 & rolling
 #cp -f "\${wallpaper}" /usr/share/gnome-shell/theme/KaliLogin.png                                                 # Change login wallpaper (after swipe) - kali 2
 
 /usr/bin/xfdesktop --reload 2>/dev/null &
@@ -940,7 +941,7 @@ done
 file=~/.bash_aliases; [ -e "${file}" ] && cp -n $file{,.bkup}   #/etc/bash.bash_aliases
 ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
 grep -q '^## grep aliases' "${file}" 2>/dev/null \
-  || echo -e '## grep aliases\nalias grep="grep --color=always"\nalias ngrep="grep -n"\n' >> "${file}"
+  || echo -e '## grep aliases\nalias grep="grep --color=auto"\nalias ngrep="grep -n"\n' >> "${file}"
 grep -q '^alias egrep=' "${file}" 2>/dev/null \
   || echo -e 'alias egrep="egrep --color=auto"\n' >> "${file}"
 grep -q '^alias fgrep=' "${file}" 2>/dev/null \
@@ -1011,7 +1012,7 @@ grep -q '^## Listing' "${file}" 2>/dev/null \
   || echo -e '### Listing\nalias ll="ls -l --block-size=1 --color=auto"\n' >> "${file}"
 #--- Add in tools
 grep -q '^## nmap' "${file}" 2>/dev/null \
-  || echo -e '## nmap\nalias nmap="nmap --reason --open --stats-every 3m --max-retries 1 --max-scan-delay 20 --defeat-rst-ratelimit"\n' >> "${file}"
+  || echo -e '## nmap\nalias nmap="nmap --reason --open --stats-every 3m --max-retries 1 --max-scan-delay 20 "\n' >> "${file}"
 grep -q '^## aircrack-ng' "${file}" 2>/dev/null \
   || echo -e '## aircrack-ng\nalias aircrack-ng="aircrack-ng -z"\n' >> "${file}"
 grep -q '^## airodump-ng' "${file}" 2>/dev/null \
