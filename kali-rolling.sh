@@ -3649,7 +3649,8 @@ popd >/dev/null
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Cobalt Strike${RESET} ~ post-exploitation collaboration tool"
 apt -y -qq install curl \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
-timeout 300 curl --progress -k -L -f "https://cobaltstrike.com/downloads/0ad141d6337de0a938348ef8c416c226/cobaltstrike-trial.tgz" > "/opt/cs.tgz" \
+h=$(curl 'https://cobaltstrike.com/download' | grep -m 1 -oP '([a-z0-9]{32})')
+timeout 300 curl --progress -k -L -f "https://cobaltstrike.com/downloads/$h/cobaltstrike-trial.tgz" > "/opt/cs.tgz" \
   || echo -e ' '${RED}'[!]'${RESET}" Issue downloading cobaltstrike-trial.tgz" 1>&2
 tar -zxf /opt/cs.tgz -C /opt/
 rm -f /opt/cs.tgz
