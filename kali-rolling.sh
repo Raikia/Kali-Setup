@@ -3671,6 +3671,7 @@ update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so mozilla-
 update-alternatives --set java /opt/jdk1.7.0_79/bin/java
 update-alternatives --set javac /opt/jdk1.7.0_79/bin/javac
 update-alternatives --set mozilla-javaplugin.so /opt/jdk1.7.0_79/jre/lib/amd64/libnpjp2.so
+rm -f /opt/jdk.tar.gz
 
 
 ##### Install cs malleable c2
