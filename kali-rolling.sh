@@ -3193,6 +3193,7 @@ git clone -q -b master https://github.com/PowerShellEmpire/Empire.git /opt/empir
   || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
 pushd /opt/empire-git/ >/dev/null
 git pull -q
+sh ./setup/install.sh
 popd >/dev/null
 
 
@@ -3599,6 +3600,115 @@ source "${file}" || source ~/.zshrc
 
 
 ##### Custom insert point
+
+
+##### Install EyeWitness
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}EyeWitness${RESET} ~ web screenshot tool"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+git clone -q -b master https://github.com/ChrisTruncer/EyeWitness.git /opt/eyewitness-git/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/eyewitness-git/ >/dev/null
+git pull -q
+sh ./setup/setup.sh
+popd >/dev/null
+
+##### Install credninja
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}credninja${RESET} ~ credential smb checker"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+git clone -q -b master https://github.com/Raikia/CredNinja.git /opt/credninja-git/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/credninja-git/ >/dev/null
+git pull -q
+popd >/dev/null
+
+##### Install smbcrunch
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}smbcrunch${RESET} ~ smb enumeration tool"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+git clone -q -b master https://github.com/Raikia/SMBCrunch.git /opt/smbcrunch-git/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/smbcrunch-git/ >/dev/null
+git pull -q
+popd >/dev/null
+
+
+##### Install ipcheckscope
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}ipcheckscope${RESET} ~ scope checker for IP addresses"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+git clone -q -b master https://github.com/Raikia/IPCheckScope.git /opt/ipcheckscope-git/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/ipcheckscope-git/ >/dev/null
+git pull -q
+popd >/dev/null
+
+
+##### Install cobaltstrike
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Cobalt Strike${RESET} ~ post-exploitation collaboration tool"
+apt -y -qq install curl \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+timeout 300 curl --progress -k -L -f "https://cobaltstrike.com/downloads/0ad141d6337de0a938348ef8c416c226/cobaltstrike-trial.tgz" > "/opt/cs.tgz" \
+  || echo -e ' '${RED}'[!]'${RESET}" Issue downloading cobaltstrike-trial.tgz" 1>&2
+tar -zxf /opt/cs.tgz -C /opt/
+rm -f /opt/cs.tgz
+
+##### Install cs malleable c2
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Malleable C2 (Cobalt Strike)${RESET} ~ signature changing for cobalt strike"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+mkdir -p /opt/cobaltstrike/malleable_c2/
+git clone -q -b master https://github.com/rsmudge/Malleable-C2-Profiles.git /opt/cobaltstrike/malleable_c2/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/cobaltstrike/malleable_c2/ >/dev/null
+git pull -q
+popd >/dev/null
+
+
+##### Install various CS scripts
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Various Cobalt Strike Scripts${RESET} ~ scripts to run with cs"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+mkdir -p /opt/cs_scripts/cobaltstrike_toolkit/
+git clone -q -b master https://github.com/killswitch-GUI/CobaltStrike-ToolKit.git /opt/cs_scripts/cobaltstrike_toolkit/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/cs_scripts/cobaltstrike_toolkit/ >/dev/null
+git pull -q
+popd >/dev/null
+mkdir -p /opt/cs_scripts/kickass_bot/
+git clone -q -b master https://github.com/kussic/CS-KickassBot.git /opt/cs_scripts/kickass_bot/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/cs_scripts/kickass_bot/ >/dev/null
+git pull -q
+popd >/dev/null
+mkdir -p /opt/cs_scripts/persistence_aggressor_scripts/
+git clone -q -b master https://github.com/ZonkSec/persistence-aggressor-script.git /opt/cs_scripts/persistence_aggressor_scripts/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/cs_scripts/persistence_aggressor_scripts/ >/dev/null
+git pull -q
+popd >/dev/null
+
+##### Install bloodhound
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}bloodhound${RESET} ~ graphical representation of path to domain admin"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+git clone -q -b master https://github.com/adaptivethreat/BloodHound.git /opt/bloodhound-git/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/bloodhound-git/ >/dev/null
+git pull -q
+popd >/dev/null
+
+##### Install git responder
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Responder (git version)${RESET} ~ rogue server"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+git clone -q -b master https://github.com/SpiderLabs/Responder.git /opt/responder-git/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/responder-git/ >/dev/null
+git pull -q
+popd >/dev/null
+
 
 
 
