@@ -171,7 +171,7 @@ if [[ $(which gnome-shell) ]]; then
   (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Disabling ${GREEN}screensaver${RESET}"
   xset s 0 0
   xset s off
-  echo "xset s off\n" >> /root/.xinitrc
+  echo "xset s off" >> /root/.xinitrc
   gsettings set org.gnome.desktop.session idle-delay 0
 else
   echo -e "\n\n ${YELLOW}[i]${RESET} ${YELLOW}Skipping disabling package updater${RESET}..."
@@ -1117,6 +1117,9 @@ grep -q '/usr/bin/tmux' "${file}" 2>/dev/null \
 sed -i 's/ZSH_THEME=.*/ZSH_THEME="mh"/' "${file}"   # Other themes: mh, jreese,   alanpeabody,   candy,   terminalparty, kardan,   nicoulaj, sunaku
 #--- Configure oh-my-zsh
 sed -i 's/plugins=(.*)/plugins=(git git-extras tmux last-working-dir dirhistory python pip)/' "${file}"
+
+echo 'source $HOME/.xinitrc' >> "${file}"
+
 #--- Set zsh as default shell (current user)
 chsh -s "$(which zsh)"
 
