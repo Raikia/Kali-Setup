@@ -3658,6 +3658,19 @@ timeout 300 curl --progress -k -L -f "https://cobaltstrike.com/downloads/$h/coba
 tar -zxf /opt/cs.tgz -C /opt/
 rm -f /opt/cs.tgz
 
+##### Install Oracle JDK
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Oracle JDK${RESET} ~ oracle jdk because openjdk has bugs"
+apt -y -qq install wget \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+
+timeout 300 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz" -O /opt/jdk.tar.gz
+tar -xzvf /opt/jdk.tar.gz -C /opt/
+update-alternatives --install /usr/bin/java java /opt/jdk1.7.0_79/bin/java 1
+update-alternatives --install /usr/bin/javac javac /opt/jdk1.7.0_79/bin/javac 1
+update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so mozilla-javaplugin.so /opt/jdk1.7.0_79/jre/lib/amd64/libnpjp2.so 1
+update-alternatives --set java /opt/jdk1.7.0_79/bin/java
+update-alternatives --set javac /opt/jdk1.7.0_79/bin/javac
+update-alternatives --set mozilla-javaplugin.so /opt/jdk1.7.0_79/jre/lib/amd64/libnpjp2.so
 
 
 ##### Install cs malleable c2
