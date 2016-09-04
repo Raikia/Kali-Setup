@@ -3654,6 +3654,8 @@ timeout 300 curl --progress -k -L -f "https://cobaltstrike.com/downloads/0ad141d
 tar -zxf /opt/cs.tgz -C /opt/
 rm -f /opt/cs.tgz
 
+
+
 ##### Install cs malleable c2
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Malleable C2 (Cobalt Strike)${RESET} ~ signature changing for cobalt strike"
 apt -y -qq install git \
@@ -3706,6 +3708,26 @@ apt -y -qq install git \
 git clone -q -b master https://github.com/SpiderLabs/Responder.git /opt/responder-git/ \
   || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
 pushd /opt/responder-git/ >/dev/null
+git pull -q
+popd >/dev/null
+
+##### Install Just Metadata
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Just-Metadata${RESET} ~ information gatherer about IP addresses"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+git clone -q -b master https://github.com/ChrisTruncer/Just-Metadata.git /opt/just-metadata-git/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/just-metadata-git/ >/dev/null
+git pull -q
+popd >/dev/null
+
+##### Install Egress-Assess
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Egress-Assess${RESET} ~ Generate fake egress data to assess filtering"
+apt -y -qq install git \
+  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+git clone -q -b master https://github.com/ChrisTruncer/Egress-Assess.git /opt/egress-assess-git/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/egress-assess-git/ >/dev/null
 git pull -q
 popd >/dev/null
 
