@@ -56,7 +56,7 @@ timezone="America/Chicago"  # Set timezone location                             
 ##### Optional steps
 burpFree=false              # Disable configuring Burp Suite (for Burp Pro users...)    [ --burp ]
 hardenDNS=false             # Set static & lock DNS name server                         [ --dns ]
-openVAS=tru                 # Install & configure OpenVAS (not everyone wants it...)    [ --openvas ]
+openVAS=true                 # Install & configure OpenVAS (not everyone wants it...)    [ --openvas ]
 
 ##### (Optional) Enable debug mode?
 #set -x
