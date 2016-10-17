@@ -56,7 +56,7 @@ timezone="America/Chicago"  # Set timezone location                             
 ##### Optional steps
 burpFree=false              # Disable configuring Burp Suite (for Burp Pro users...)    [ --burp ]
 hardenDNS=false             # Set static & lock DNS name server                         [ --dns ]
-openVAS=true                 # Install & configure OpenVAS (not everyone wants it...)    [ --openvas ]
+openVAS=false                 # Install & configure OpenVAS (not everyone wants it...)    [ --openvas ]
 
 ##### (Optional) Enable debug mode?
 #set -x
@@ -3750,6 +3750,15 @@ git pull -q
 popd >/dev/null
 
 
+##### Fixing xfce4 screensaver
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Fixing screensaver"
+apt -y -qq install xfce4-power-manager \
+  || echo -e ' '${RED}'[!] Issue installing xfce4-power-manager'${RESET} 1>&2
+nohup xfce4-power-manager &
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/blank-on-ac -s 0
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/dpms-on-ac-off -s 0
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/dpms-on-ac-sleep -s 0
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/power-button-action -s 3
 
 
 ##### Clean the system
