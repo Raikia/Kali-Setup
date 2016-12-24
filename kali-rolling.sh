@@ -70,7 +70,7 @@ BOLD="\033[01;01m"     # Highlight
 RESET="\033[00m"       # Normal
 
 STAGE=0                                                       # Where are we up to
-TOTAL=$(grep '(${STAGE}/${TOTAL})' $0 | wc -l);(( TOTAL-- ))  # How many things have we got todo
+TOTAL=$(grep -v '^\s*#' $0 | grep '(${STAGE}/${TOTAL})' | wc -l);(( TOTAL-- ))  # How many things have we got todo
 
 
 #-Arguments------------------------------------------------------------#
@@ -3789,14 +3789,15 @@ popd >/dev/null
 
 ##### Install Egress-Assess
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Egress-Assess${RESET} ~ Generate fake egress data to assess filtering"
-apt -y -qq install git \
+apt -y -qq install git python-pyftpdlib \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
-git clone -q -b master https://github.com/ChrisTruncer/Egress-Assess.git /opt/egress-assess-git/ \
+git clone -q -b master https://github.com/ChrisTruncer/Egress-As/sess.git /opt/egress-assess-git/ \
   || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
 pushd /opt/egress-assess-git/ >/dev/null
 git pull -q
 pushd ./setup/ >/dev/null
-sh ./setup.sh
+pip install 
+#sh ./setup.sh  # This prompts for input for the SSL cert, so lets comment that out for now
 popd >/dev/null
 popd >/dev/null
 
