@@ -3796,7 +3796,6 @@ git clone -q -b master https://github.com/ChrisTruncer/Egress-As/sess.git /opt/e
 pushd /opt/egress-assess-git/ >/dev/null
 git pull -q
 pushd ./setup/ >/dev/null
-pip install 
 #sh ./setup.sh  # This prompts for input for the SSL cert, so lets comment that out for now
 popd >/dev/null
 popd >/dev/null
