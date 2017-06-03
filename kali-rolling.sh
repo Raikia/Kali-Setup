@@ -1,6 +1,6 @@
 #!/bin/bash
 #-Metadata----------------------------------------------------#
-#  Filename: kali-rolling.sh             (Update: 2016-04-11) #
+#  Filename: kali-rolling.sh             (Update: 2017-06-03) #
 #-Info--------------------------------------------------------#
 #  Personal post-install script for Kali Linux Rolling        #
 #-Author(s)---------------------------------------------------#
@@ -171,6 +171,7 @@ if [[ $(which gnome-shell) ]]; then
   (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Disabling ${GREEN}screensaver${RESET}"
   xset s 0 0
   xset s off
+  echo "xset s off" >> /root/.xinitrc
   gsettings set org.gnome.desktop.session idle-delay 0
 else
   echo -e "\n\n ${YELLOW}[i]${RESET} ${YELLOW}Skipping disabling package updater${RESET}..."
@@ -382,8 +383,8 @@ if [[ "${_TMP}" -gt 1 ]]; then
   if [[ -z "${TMP}" ]]; then
     echo -e '\n '${RED}'[!]'${RESET}' You are '${RED}'not using the latest kernel'${RESET} 1>&2
     echo -e " ${YELLOW}[i]${RESET} You have it ${YELLOW}downloaded${RESET} & installed, just ${YELLOW}not USING IT${RESET}"
-    #echo -e "\n ${YELLOW}[i]${RESET} You ${YELLOW}NEED to REBOOT${RESET}, before re-running this script"
-    #exit 1
+    echo -e "\n ${YELLOW}[i]${RESET} You ${YELLOW}NEED to REBOOT${RESET}, before re-running this script"
+    exit 1
     sleep 30s
   else
     echo -e " ${YELLOW}[i]${RESET} ${YELLOW}You're using the latest kernel${RESET} (Good to continue)"
@@ -756,8 +757,8 @@ echo -n '[4/10]'; timeout 300 curl --progress -k -L -f "https://lh5.googleuserco
   || echo -e ' '${RED}'[!]'${RESET}" Issue downloading kali_blue_splat.png" 1>&2
 echo -n '[5/10]'; timeout 300 curl --progress -k -L -f "http://wallpaperstock.net/kali-linux_wallpapers_39530_1920x1080.jpg" > /usr/share/wallpapers/kali-linux_wallpapers_39530.png \
   || echo -e ' '${RED}'[!]'${RESET}" Issue downloading kali-linux_wallpapers_39530.png" 1>&2
-echo -n '[6/10]'; timeout 300 curl --progress -k -L -f "http://em3rgency.com/wp-content/uploads/2012/12/Kali-Linux-faded-no-Dragon-small-text.png" > /usr/share/wallpapers/kali_black_clean.png \
-  || echo -e ' '${RED}'[!]'${RESET}" Issue downloading kali_black_clean.png" 1>&2
+#echo -n '[6/10]'; timeout 300 curl --progress -k -L -f "http://em3rgency.com/wp-content/uploads/2012/12/Kali-Linux-faded-no-Dragon-small-text.png" > /usr/share/wallpapers/kali_black_clean.png \
+#  || echo -e ' '${RED}'[!]'${RESET}" Issue downloading kali_black_clean.png" 1>&2
 echo -n '[7/10]'; timeout 300 curl --progress -k -L -f "http://orig13.deviantart.net/1386/f/2015/166/2/8/kali_linux_background_by_saintj123-d8xf3ga.jpg" > /usr/share/wallpapers/kali_black_stripes.jpg \
   || echo -e ' '${RED}'[!]'${RESET}" Issue downloading kali_black_stripes.jpg" 1>&2
 echo -n '[8/10]'; timeout 300 curl --progress -k -L -f "http://fc01.deviantart.net/fs71/f/2011/118/e/3/bt___edb_wallpaper_by_xxdigipxx-d3f4nxv.png" > /usr/share/wallpapers/kali_bt_edb.jpg \
@@ -1862,7 +1863,7 @@ done
 
 ##### Install PyCharm (Community Edition)
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}PyCharm (Community Edition)${RESET} ~ Python IDE"
-timeout 300 curl --progress -k -L -f "https://download.jetbrains.com/python/pycharm-community-2016.2.3.tar.gz" > /tmp/pycharms-community.tar.gz \
+timeout 300 curl --progress -k -L -f "https://download.jetbrains.com/python/pycharm-community-2017.1.3.tar.gz" > /tmp/pycharms-community.tar.gz \
   || echo -e ' '${RED}'[!]'${RESET}" Issue downloading pycharms-community.tar.gz" 1>&2       #***!!! hardcoded version!
 if [ -e /tmp/pycharms-community.tar.gz ]; then
   tar -xf /tmp/pycharms-community.tar.gz -C /tmp/
@@ -2908,10 +2909,10 @@ apt -y -qq install curl windows-binaries unzip unrar \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 echo -n '[1/2]'; timeout 300 curl --progress -k -L -f "https://download.sysinternals.com/files/PSTools.zip" > /tmp/pstools.zip \
   || echo -e ' '${RED}'[!]'${RESET}" Issue downloading pstools.zip" 1>&2
-echo -n '[2/2]'; timeout 300 curl --progress -k -L -f "http://www.coresecurity.com/system/files/pshtoolkit_v1.4.rar" > /tmp/pshtoolkit.rar \
+echo -n '[2/2]'; timeout 300 curl --progress -k -L -f "http://www.coresecurity.com/system/files/pshtoolkit_v1.4-src.rar" > /tmp/pshtoolkit.rar \
   || echo -e ' '${RED}'[!]'${RESET}" Issue downloading pshtoolkit.rar" 1>&2  #***!!! hardcoded path!
 unzip -q -o -d /usr/share/windows-binaries/pstools/ /tmp/pstools.zip
-unrar x -y /tmp/pshtoolkit.rar /usr/share/windows-binaries/ >/dev/null
+unrar x -y /tmp/pshtoolkit.rar /usr/share/windows-binaries-src/ >/dev/null
 
 
 ##### Install Python (Windows via WINE)
@@ -3341,7 +3342,7 @@ chmod +x "${file}"
 
 ##### Install crowbar
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}crowbar${RESET} ~ brute force"
-apt -y -qq install git openvpn freerdp-x11 vncviewer \
+apt -y -qq install git openvpn freerdp-x11 tigervnc-viewer \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 git clone -q -b master https://github.com/galkan/crowbar.git /opt/crowbar-git/ \
   || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
@@ -3697,21 +3698,21 @@ popd >/dev/null
 
 
 ##### Install cobaltstrike
-(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Cobalt Strike${RESET} ~ post-exploitation collaboration tool"
-apt -y -qq install curl \
-  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
-h=$(curl 'https://cobaltstrike.com/download' | grep -m 1 -oP '([a-z0-9]{32})')
-timeout 300 curl --progress -k -L -f "https://cobaltstrike.com/downloads/$h/cobaltstrike-trial.tgz" > "/opt/cs.tgz" \
-  || echo -e ' '${RED}'[!]'${RESET}" Issue downloading cobaltstrike-trial.tgz" 1>&2
-tar -zxf /opt/cs.tgz -C /opt/
-rm -f /opt/cs.tgz
+#(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Cobalt Strike${RESET} ~ post-exploitation collaboration tool"
+#apt -y -qq install curl \
+#  || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
+#h=$(curl 'https://cobaltstrike.com/download' | grep -m 1 -oP '([a-z0-9]{32})')
+#timeout 300 curl --progress -k -L -f "https://cobaltstrike.com/downloads/$h/cobaltstrike-trial.tgz" > "/opt/cs.tgz" \
+#  || echo -e ' '${RED}'[!]'${RESET}" Issue downloading cobaltstrike-trial.tgz" 1>&2
+#tar -zxf /opt/cs.tgz -C /opt/
+#rm -f /opt/cs.tgz
 
 ##### Install Oracle JDK
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Oracle JDK${RESET} ~ oracle jdk because openjdk has bugs"
 apt -y -qq install wget \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 
-timeout 300 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz" -O /opt/jdk.tar.gz
+timeout 300 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz" -O /opt/jdk.tar.gz
 tar -xzvf /opt/jdk.tar.gz -C /opt/
 update-alternatives --install /usr/bin/java java /opt/jdk1.7.0_79/bin/java 1
 update-alternatives --install /usr/bin/javac javac /opt/jdk1.7.0_79/bin/javac 1
@@ -3791,7 +3792,7 @@ popd >/dev/null
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Egress-Assess${RESET} ~ Generate fake egress data to assess filtering"
 apt -y -qq install git python-pyftpdlib \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
-git clone -q -b master https://github.com/ChrisTruncer/Egress-As/sess.git /opt/egress-assess-git/ \
+git clone -q -b master https://github.com/ChrisTruncer/Egress-Assess.git /opt/egress-assess-git/ \
   || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
 pushd /opt/egress-assess-git/ >/dev/null
 git pull -q
