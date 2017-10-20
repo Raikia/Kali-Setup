@@ -1,48 +1,24 @@
 #!/bin/bash
 #-Metadata----------------------------------------------------#
-#  Filename: kali-rolling.sh             (Update: 2017-06-03) #
+#  Filename: kali-rolling.sh             (Update: 2017-10-20) #
 #-Info--------------------------------------------------------#
 #  Personal post-install script for Kali Linux Rolling        #
 #-Author(s)---------------------------------------------------#
 #  g0tmilk ~ https://blog.g0tmi1k.com/                        #
+#  Raikiasec ~ https://github.com/raikiasec                   #
 #-Operating System--------------------------------------------#
 #  Designed for: Kali Linux Rolling [x64] (VM - VMware)       #
-#     Tested on: Kali Linux 2016.2 x64/x84/full/light/mini/vm #
-#     Kali v1.x: https://g0tmi1k/os-scripts/master/kali1.sh   #
-#     Kali v2.x: https://g0tmi1k/os-scripts/master/kali2.sh   #
-#-Licence-----------------------------------------------------#
+#     Tested on: Kali Linux 2017.2 x64/x84/full/light/mini/vm #
+#-License-----------------------------------------------------#
 #  MIT License ~ http://opensource.org/licenses/MIT           #
 #-Notes-------------------------------------------------------#
 #  Run as root straight after a clean install of Kali Rolling #
 #                             ---                             #
 #  You will need 25GB+ free HDD space before running.         #
 #                             ---                             #
-#  Command line arguments:                                    #
-#    -burp     = Automates configuring Burp Suite (Community) #
-#    -dns      = Use OpenDNS and locks permissions            #
-#    -openvas  = Installs & configures OpenVAS vuln scanner   #
-#    -osx      = Changes to Apple keyboard layout             #
-#                                                             #
-#    -keyboard <value> = Change the keyboard layout language  #
-#    -timezone <value> = Change the timezone location         #
-#                                                             #
-#  e.g. # bash kali-rolling.sh -burp -keyboard gb -openvas    #
-#                             ---                             #
-#  Will cut it up (so modular based), at a later date...      #
-#                             ---                             #
 #             ** This script is meant for _ME_. **            #
 #         ** EDIT this to meet _YOUR_ requirements! **        #
 #-------------------------------------------------------------#
-
-
-if [ 1 -eq 0 ]; then    # This is never true, thus it acts as block comments ;)
-################################################################################
-### One liner - Grab the latest version and execute! ###########################
-################################################################################
-wget -qO kali-rolling.sh https://raw.github.com/g0tmi1k/os-scripts/master/kali-rolling.sh \
-  && bash kali-rolling.sh -burp -keyboard gb -timezone "Europe/London"
-################################################################################
-fi
 
 
 #-Defaults-------------------------------------------------------------#
@@ -76,43 +52,6 @@ TOTAL=$(grep -v '^\s*#' $0 | grep '(${STAGE}/${TOTAL})' | wc -l);(( TOTAL-- ))  
 #-Arguments------------------------------------------------------------#
 
 
-##### Read command line arguments
-while [[ "${#}" -gt 0 && ."${1}" == .-* ]]; do
-  opt="${1}";
-  shift;
-  case "$(echo ${opt} | tr '[:upper:]' '[:lower:]')" in
-    -|-- ) break 2;;
-
-    -osx|--osx )
-      keyboardApple=true;;
-    -apple|--apple )
-      keyboardApple=true;;
-
-    -dns|--dns )
-      hardenDNS=true;;
-
-    -openvas|--openvas )
-      openVAS=true;;
-
-    -burp|--burp )
-      burpFree=true;;
-
-    -keyboard|--keyboard )
-      keyboardLayout="${1}"; shift;;
-    -keyboard=*|--keyboard=* )
-      keyboardLayout="${opt#*=}";;
-
-    -timezone|--timezone )
-      timezone="${1}"; shift;;
-    -timezone=*|--timezone=* )
-      timezone="${opt#*=}";;
-
-    *) echo -e ' '${RED}'[!]'${RESET}" Unknown option: ${RED}${x}${RESET}" 1>&2 \
-      && exit 1;;
-   esac
-done
-
-
 ##### Check user inputs
 if [[ -n "${timezone}" && ! -f "/usr/share/zoneinfo/${timezone}" ]]; then
   echo -e ' '${RED}'[!]'${RESET}" Looks like the ${RED}timezone '${timezone}'${RESET} is incorrect/not supported (Example: ${BOLD}Europe/London${RESET})" 1>&2
@@ -141,7 +80,7 @@ else
 fi
 
 if [ "${burpFree}" != "true" ]; then
-  echo -e "\n\n ${YELLOW}[i]${RESET} ${YELLOW}Skipping Burp Suite${RESET} (missing: '$0 ${BOLD}--burp${RESET}')..." 1>&2
+  echo -e "\n\n ${YELLOW}[i]${RESET} ${YELLOW}Not configuring Burp Suite free${RESET}..." 1>&2
   sleep 2s
 fi
 
@@ -3712,14 +3651,14 @@ popd >/dev/null
 apt -y -qq install wget \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 
-timeout 300 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz" -O /opt/jdk.tar.gz
+timeout 300 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz" -O /opt/jdk.tar.gz
 tar -xzvf /opt/jdk.tar.gz -C /opt/
-update-alternatives --install /usr/bin/java java /opt/jdk1.7.0_79/bin/java 1
-update-alternatives --install /usr/bin/javac javac /opt/jdk1.7.0_79/bin/javac 1
-update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so mozilla-javaplugin.so /opt/jdk1.7.0_79/jre/lib/amd64/libnpjp2.so 1
-update-alternatives --set java /opt/jdk1.7.0_79/bin/java
-update-alternatives --set javac /opt/jdk1.7.0_79/bin/javac
-update-alternatives --set mozilla-javaplugin.so /opt/jdk1.7.0_79/jre/lib/amd64/libnpjp2.so
+update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_152/bin/java 1
+update-alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_152/bin/javac 1
+update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so mozilla-javaplugin.so /opt/jdk1.8.0_152/jre/lib/amd64/libnpjp2.so 1
+update-alternatives --set java /opt/jdk1.8.0_152/bin/java
+update-alternatives --set javac /opt/jdk1.8.0_152/bin/javac
+update-alternatives --set mozilla-javaplugin.so /opt/jdk1.8.0_152/jre/lib/amd64/libnpjp2.so
 rm -f /opt/jdk.tar.gz
 
 
@@ -3757,6 +3696,19 @@ git clone -q -b master https://github.com/ZonkSec/persistence-aggressor-script.g
 pushd /opt/cs_scripts/persistence_aggressor_scripts/ >/dev/null
 git pull -q
 popd >/dev/null
+mkdir -p /opt/cs_scripts/harleyqu1nn_aggressor_scripts/
+git clone -q -b master https://github.com/harleyQu1nn/AggressorScripts.git /opt/cs_scripts/harleyqu1nn_aggressor_scripts/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 2>&2
+pushd /opt/cs_scripts/harleyqu1nn_aggressor_scripts/ > /dev/null
+git pull -q
+popd >/dev/null
+mkdir -p /opt/cs_scripts/ramen0x3f_scripts/
+git clone -q -b master https://github.com/ramen0x3f/AggressorScripts.git /opt/cs_scripts/ramen0x3f_scripts/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 2>&2
+pushd /opt/cs_scripts/ramen0x3f_scripts/ > /dev/null
+git pull -q
+popd >/dev/null
+
 
 ##### Install bloodhound
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}bloodhound${RESET} ~ graphical representation of path to domain admin"
@@ -3801,6 +3753,71 @@ pushd ./setup/ >/dev/null
 popd >/dev/null
 popd >/dev/null
 
+### Install other scripts in /opt
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}various /opt scripts${RESET} ~ A large amount of useful tools in /opt"
+git clone -q -b master https://github.com/secretsquirrel/SigThief.git /opt/sigthief/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/sigthief/ >/dev/null
+git pull -q
+popd >/dev/null
+git clone -q -b master https://github.com/enigma0x3/Misc-PowerShell-Stuff.git /opt/misc_powershell_stuff/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/misc_powershell_stuff/ >/dev/null
+git pull -q
+popd >/dev/null
+git clone -q -b master https://github.com/0x09AL/raven.git /opt/raven/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/raven/ >/dev/null
+git pull -q
+popd >/dev/null
+git clone -q -b master https://github.com/dafthack/MailSniper.git /opt/mailsniper/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/mailsniper/ >/dev/null
+git pull -q
+popd >/dev/null
+git clone -q -b master https://github.com/Arvanaghi/CheckPlease.git /opt/checkplease/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/checkplease/ >/dev/null
+git pull -q
+popd >/dev/null
+git clone -q -b master https://github.com/trustedsec/ptf.git /opt/ptf/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/ptf/ >/dev/null
+git pull -q
+popd >/dev/null
+git clone -q -b master https://github.com/Mr-Un1k0d3r/PowerLessShell.git /opt/PowerLessShell/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/PowerLessShell/ >/dev/null
+git pull -q
+popd >/dev/null
+git clone -q -b master https://github.com/Mr-Un1k0d3r/CatMyFish.git /opt/CatMyFish/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/CatMyFish/ >/dev/null
+git pull -q
+popd >/dev/null
+git clone -q -b master https://github.com/Mr-Un1k0d3r/MaliciousMacroGenerator.git /opt/MaliciousMacroGenerator/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
+pushd /opt/MaliciousMacroGenerator/ >/dev/null
+git pull -q
+popd >/dev/null
+
+
+
+
+#### Adding update script in /opt
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Adding ${GREEN}UpdateAll.sh${RESET} ~ Script in /opt/ to update all git repos"
+cat > /opt/UpdateAll.sh <<- EOM
+#!/bin/bash
+
+for d in /opt/* ; do
+    echo "Starting \$d"
+    pushd \$d &> /dev/null
+    git fetch
+    git pull origin master
+    popd &> /dev/null
+done
+EOM
+chmod +x /opt/Update
 
 ##### Fixing xfce4 screensaver
 #(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Fixing screensaver"
