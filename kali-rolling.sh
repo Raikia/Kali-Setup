@@ -525,6 +525,7 @@ cat <<EOF > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml \
 </channel>
 EOF
 nohup xfce4-power-manager &
+
 #--- Desktop files
 ln -sf /usr/share/applications/exo-terminal-emulator.desktop ~/.config/xfce4/panel/launcher-2/exo-terminal-emulator.desktop
 ln -sf /usr/share/applications/kali-wireshark.desktop        ~/.config/xfce4/panel/launcher-4/kali-wireshark.desktop
@@ -3829,6 +3830,9 @@ chmod +x /opt/Update
 #xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/dpms-on-ac-sleep -s 0
 #xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/power-button-action -s 3
 
+##### Remove Gnome session to make xfce default
+(( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Removing gnome-session"
+apt remove -y --purge gnome-session
 
 ##### Clean the system
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) ${GREEN}Cleaning${RESET} the system"
