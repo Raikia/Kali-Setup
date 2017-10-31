@@ -1,14 +1,12 @@
 # OS-Scripts
 
-Personal collection of Operating System (OS) scripts _(and related things)_.
+This script was originally written by g0tmi1k (https://github.com/g0tmi1k/os-scripts).  I do not claim credit for the basis of the script! That said, I have added a lot more tools and fixed a lot of error with the original version. I maintain this and keep it updated to how I like it.
 
-Editted by Raikia
+Edited by Raikia
 
 - - -
 
-## Kali Rolling
+## Kali Rolling (2017.2)
 
-Kali Rolling (2016.1) _(Debian Testing)_
-![](https://i.imgur.com/23dGQEa.png)
-_Left: tweaked GNOME 3.18,  Right: custom XFCE 4.12.  Both running conky._
+![](https://i.imgur.com/V2Fa6x4.jpg)
 
