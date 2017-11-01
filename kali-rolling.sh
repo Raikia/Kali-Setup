@@ -3725,7 +3725,7 @@ popd >/dev/null
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}Responder (git version)${RESET} ~ rogue server"
 apt -y -qq install git \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
-git clone -q -b master https://github.com/SpiderLabs/Responder.git /opt/responder-git/ \
+git clone -q -b master https://github.com/lgandx/Responder.git /opt/responder-git/ \
   || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
 pushd /opt/responder-git/ >/dev/null
 git pull -q
