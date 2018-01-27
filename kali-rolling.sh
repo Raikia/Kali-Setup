@@ -86,8 +86,10 @@ fi
 
 
 ##### Fix display output for GUI programs (when connecting via SSH)
-export DISPLAY=:0.0
-export TERM=xterm
+if [[ ${DISPLAY:0:1} != ":" ]]; then
+    export DISPLAY=:0.0
+    export TERM=xterm
+fi
 
 
 ##### Are we using GNOME?
