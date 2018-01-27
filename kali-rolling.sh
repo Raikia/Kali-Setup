@@ -3176,7 +3176,7 @@ git clone -q -b master https://github.com/PowerShellEmpire/Empire.git /opt/empir
 pushd /opt/empire-git/ >/dev/null
 git pull -q
 pushd ./setup
-sh ./install.sh
+bash ./install.sh
 popd >/dev/null
 popd >/dev/null
 
