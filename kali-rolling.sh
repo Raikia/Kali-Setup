@@ -3603,7 +3603,7 @@ git clone -q -b master https://github.com/ChrisTruncer/EyeWitness.git /opt/eyewi
 pushd /opt/eyewitness-git/ >/dev/null
 git pull -q
 pushd ./setup/
-sh ./setup.sh
+bash ./setup.sh
 popd >/dev/null
 popd >/dev/null
 
