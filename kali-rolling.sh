@@ -3805,6 +3805,8 @@ git clone -q -b master https://github.com/Mr-Un1k0d3r/MaliciousMacroGenerator.gi
 pushd /opt/MaliciousMacroGenerator/ >/dev/null
 git pull -q
 popd >/dev/null
+git clone -q -b master https://github.com/Veil-Framework/Veil.git /opt/veil/ \
+  || echo -e ' '${RED}'[!] Issue when git cloning'${RESET} 1>&2
 
 
 
