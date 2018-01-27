@@ -1312,8 +1312,8 @@ apt -y -qq install unzip curl firefox-esr \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 #--- Configure firefox
 export DISPLAY=:0.0
-timeout 15 firefox >/dev/null 2>&1                # Start and kill. Files needed for first time run
-timeout 5 killall -9 -q -w firefox-esr >/dev/null
+timeout 25 firefox >/dev/null 2>&1                # Start and kill. Files needed for first time run
+timeout 15 killall -9 -q -w firefox-esr >/dev/null
 file=$(find ~/.mozilla/firefox/*.default*/ -maxdepth 1 -type f -name 'prefs.js' -print -quit)
 [ -e "${file}" ] \
   && cp -n $file{,.bkup}   #/etc/firefox-esr/pref/*.js
@@ -3652,14 +3652,16 @@ popd >/dev/null
 apt -y -qq install wget \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 
-timeout 300 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz" -O /opt/jdk.tar.gz
+JDK_LINK=$(curl -s "http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" | grep 'linux-x64.tar.gz' | head -n 1 | awk -F, '{print $3}' | awk -F'":' '{print $2}' | tr -d '"')
+timeout 300 wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "$JDK_LINK" -O /opt/jdk.tar.gz
 tar -xzvf /opt/jdk.tar.gz -C /opt/
-update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_152/bin/java 1
-update-alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_152/bin/javac 1
-update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so mozilla-javaplugin.so /opt/jdk1.8.0_152/jre/lib/amd64/libnpjp2.so 1
-update-alternatives --set java /opt/jdk1.8.0_152/bin/java
-update-alternatives --set javac /opt/jdk1.8.0_152/bin/javac
-update-alternatives --set mozilla-javaplugin.so /opt/jdk1.8.0_152/jre/lib/amd64/libnpjp2.so
+JDK_DIR=$(ls -a /opt/ | grep jdk | head -n 1)
+update-alternatives --install /usr/bin/java java /opt/$JDK_DIR/bin/java 1
+update-alternatives --install /usr/bin/javac javac /opt/$JDK_DIR/bin/javac 1
+update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so mozilla-javaplugin.so /opt/$JDK_DIR/jre/lib/amd64/libnpjp2.so 1
+update-alternatives --set java /opt/$JDK_DIR/bin/java
+update-alternatives --set javac /opt/$JDK_DIR/bin/javac
+update-alternatives --set mozilla-javaplugin.so /opt/$JDK_DIR/jre/lib/amd64/libnpjp2.so
 rm -f /opt/jdk.tar.gz
 
 
