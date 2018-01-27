@@ -104,7 +104,7 @@ if [[ $(which gnome-shell) ]]; then
 
   ##### Disable its auto notification package updater
   (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Disabling GNOME's ${GREEN}notification package updater${RESET} service ~ in case it runs during this script"
-  export DISPLAY=:0.0
+  #export DISPLAY=:0.0
   timeout 5 killall -w /usr/lib/apt/methods/http >/dev/null 2>&1
 
 
@@ -385,7 +385,7 @@ fi
 if [[ $(which gnome-shell) ]]; then
   ##### Configure GNOME 3
   (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Configuring ${GREEN}GNOME 3${RESET} ~ desktop environment"
-  export DISPLAY=:0.0
+  #export DISPLAY=:0.0
   #-- Gnome Extension - Dash Dock (the toolbar with all the icons)
   gsettings set org.gnome.shell.extensions.dash-to-dock extend-height true      # Set dock to use the full height
   gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'RIGHT'   # Set dock to the right
@@ -416,7 +416,7 @@ fi
 
 ##### Install XFCE4
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}XFCE4${RESET}${RESET} ~ desktop environment"
-export DISPLAY=:0.0
+#export DISPLAY=:0.0
 apt -y -qq install curl \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 apt -y -qq install xfce4 xfce4-mount-plugin xfce4-notifyd xfce4-places-plugin xfce4-power-manager \
@@ -679,7 +679,7 @@ update-alternatives --set x-session-manager /usr/bin/xfce4-session   #update-alt
 
 ##### Cosmetics (themes & wallpapers)
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) ${GREEN}Cosmetics${RESET}${RESET} ~ Giving it a personal touch"
-export DISPLAY=:0.0
+#export DISPLAY=:0.0
 #--- axiom / axiomd (May 18 2010) XFCE4 theme ~ http://xfce-look.org/content/show.php/axiom+xfwm?content=90145
 mkdir -p ~/.themes/
 timeout 300 curl --progress -k -L -f "https://dl.opendesktop.org/api/files/download/id/1461767736/90145-axiom.tar.gz" > /tmp/axiom.tar.gz \
@@ -1313,7 +1313,7 @@ git config --global push.default simple
 apt -y -qq install unzip curl firefox-esr \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 #--- Configure firefox
-export DISPLAY=:0.0
+#export DISPLAY=:0.0
 timeout 25 firefox >/dev/null 2>&1                # Start and kill. Files needed for first time run
 timeout 15 killall -9 -q -w firefox-esr >/dev/null
 file=$(find ~/.mozilla/firefox/*.default*/ -maxdepth 1 -type f -name 'prefs.js' -print -quit)
@@ -1379,7 +1379,7 @@ sed -i 's#^WebBrowser=.*#WebBrowser=firefox#' "${file}" 2>/dev/null \
 ##### Setup firefox's plugins
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}firefox's plugins${RESET} ~ useful addons"
 #--- Configure firefox
-export DISPLAY=:0.0
+#export DISPLAY=:0.0
 #--- Download extensions
 ffpath="$(find ~/.mozilla/firefox/*.default*/ -maxdepth 0 -mindepth 0 -type d -name '*.default*' -print -quit)/extensions"
 [ "${ffpath}" == "/extensions" ] \
@@ -1494,7 +1494,7 @@ fi
 
 ##### Install conky
 (( STAGE++ )); echo -e "\n\n ${GREEN}[+]${RESET} (${STAGE}/${TOTAL}) Installing ${GREEN}conky${RESET} ~ GUI desktop monitor"
-export DISPLAY=:0.0
+#export DISPLAY=:0.0
 apt -y -qq install conky \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 #--- Configure conky
@@ -1903,7 +1903,7 @@ if [[ "${burpFree}" != "false" ]]; then
 EOF
   #--- Extract CA
   find /tmp/ -maxdepth 1 -name 'burp*.tmp' -delete
-  export DISPLAY=:0.0
+ # export DISPLAY=:0.0
   timeout 120 burpsuite >/dev/null 2>&1 &
   PID=$!
   sleep 15s
@@ -2207,7 +2207,7 @@ apt -y -qq install daemonfs \
 apt -y -qq install filezilla \
   || echo -e ' '${RED}'[!] Issue with apt install'${RESET} 1>&2
 #--- Configure filezilla
-export DISPLAY=:0.0
+#export DISPLAY=:0.0
 timeout 5 filezilla >/dev/null 2>&1     # Start and kill. Files needed for first time run
 mkdir -p ~/.config/filezilla/
 file=~/.config/filezilla/filezilla.xml; [ -e "${file}" ] && cp -n $file{,.bkup}
