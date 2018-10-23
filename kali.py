@@ -45,7 +45,7 @@ def show_header():
 	print("It is not recommended running this on the non-default ISO" + Fore.RESET)
 	print("")
 	print(Fore.RED + "Pausing 10 seconds to make sure you want to continue. CTRL+C otherwise" + Fore.RESET)
-	#time.sleep(10)
+	time.sleep(10)
 
 def show_ending():
 	print("")
