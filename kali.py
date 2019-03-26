@@ -273,7 +273,7 @@ sleep 2s
 	## Configure global aliases
 	do_action("Configuring global aliases")
 	file_append_or_replace('/etc/bash.bashrc', '.*force_color_prompt=.*', 'force_color_prompt=yes')
-	file_append_or_replace('/etc/bash.bashrc', "PS1='.*'", 'PS1=\'${debian_chroot:+($debian_chroot)}\\[\\033[01;31m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$ \'')
+	file_append_once('/etc/bash.bashrc', 'PS1=\'${debian_chroot:+($debian_chroot)}\\[\\033[01;31m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$ \'')
 	file_append_once('/etc/bash.bashrc', "export LS_OPTIONS='--color=auto'")
 	file_append_once('/etc/bash.bashrc', 'eval "$(dircolors)"')
 	file_append_once('/etc/bash.bashrc', "alias ls='ls $LS_OPTIONS'")
