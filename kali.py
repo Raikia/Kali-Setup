@@ -9,10 +9,10 @@ import re
 
 
 ### SET THESE VARIABLES!
-YOUR_NAME = "Raikia"
-YOUR_EMAIL = "raikiasec@gmail.com"
+YOUR_NAME = "Anonymous"
+YOUR_EMAIL = "anonymous@domain.com"
 TIMEZONE = 'America/Chicago'
-HIDPI_MONITOR = True       # Set this True if you have a 4k monitor, False otherwise
+HIDPI_MONITOR = False       # Set this True if you have a 4k monitor, False otherwise
 COBALTSTRIKE_LICENSE = ''   # Leave blank if you don't have one
 INSTALL_NEW_DE = True       # Set this to false if you want to stick with gnome
 BLEEDING_EDGE_REPOS = True  # Set this to false if you dont want bleeding edge updates
