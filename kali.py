@@ -472,7 +472,7 @@ alias msfconsole="systemctl start postgresql; msfdb start; msfconsole \"\$@\""
 	file_append_once('/root/.zshrc', 'setopt globdots', 'globdots')
 	file_append_once('/root/.zshrc', 'source $HOME/.bash_aliases', '.bash_aliases')
 	file_replace('/root/.zshrc', 'ZSH_THEME=.*', 'ZSH_THEME="mh"')
-	file_replace('/root/.zshrc', 'plugins=.*', 'plugins=(git-extras tmux dirhistory python pip')
+	file_replace('/root/.zshrc', 'plugins=.*', 'plugins=(git-extras tmux dirhistory python pip)')
 	file_append_once('/root/.zshrc', 'source $HOME/.xinitrc')
 	# set zsh to default
 	run_command('chsh -s "{0}"'.format(run_command_output('which zsh').decode('ascii').rstrip()))
@@ -729,12 +729,6 @@ setg LPORT 443
 	print_success("Done")
 
 
-	## Install compiling libraries
-	do_action("Installing compiling libraries")
-	run_command("apt -y -qq install gcc g++ gcc-multilib make automake libc6 libc6-i386 libc6-i686 build-essential dpkg-dev", True, True)
-	print_success("Done")
-
-
 	## Install mingw libraries
 	do_action("Installing MinGW")
 	run_command("apt -y -qq install mingw-w64 binutils-mingw-w64 gcc-mingw-w64 cmake mingw-w64-i686-dev mingw-w64-x86-64-dev mingw-w64-tools gcc-mingw-w64-i686 gcc-mingw-w64-x86-64", True)
@@ -831,6 +825,11 @@ setg LPORT 443
 	if not file_exists('/root/.ssh/id_rsa'):
 		run_command('ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsa -P ""')
 	file_replace('/etc/ssh/sshd_config', '^.*PermitRootLogin .*', 'PermitRootLogin yes')
+	print_success("Done")
+
+	## Install compiling libraries
+	do_action("Installing compiling libraries")
+	run_command("apt -y -qq install gcc g++ gcc-multilib make automake libc6 libc6-i386 libc6-i686 build-essential dpkg-dev", True, True)
 	print_success("Done")
 
 	## Installing github repos
