@@ -49,7 +49,9 @@ def show_header():
 
 def show_ending():
 	print("")
-	print("Completed setup!  Reboot!")
+	print("Completed setup!  Rebooting in 10 seconds!")
+	time.sleep(10)
+	run_command('reboot')
 
 def check_environment():
 	do_action("Checking if we are root")
@@ -1274,7 +1276,7 @@ def install_githubs():
 	]
 
 	additional_instructions = {
-		'Raikia/CredNinja': ['ln -s /usr/local/bin/credninja CredNinja.py'],
+		'Raikia/CredNinja': ['ln -s /opt/credninja-git/CredNinja.py /usr/local/bin/credninja'],
 		'PowerShellEmpire/Empire': ['export STAGING_KEY=random; cd ./setup; bash ./install.sh'],
 		'ChrisTruncer/EyeWitness': ['cd ./setup/; bash ./setup.sh'],
 	}
