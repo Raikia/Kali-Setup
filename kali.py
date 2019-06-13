@@ -851,7 +851,7 @@ setg LPORT 443
 	do_action("Installing sublime-text")
 	run_command("wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -", True)
 	run_command("apt -y -qq install apt-transport-https", True)
-	run_command('echo "deb https://download.sublimetext.com/ apt/stable/" > /etc/apt/sources.list.d/sublime-text.list', True)
+	file_write('/etc/apt/sources.list.d/sublime-text.list', 'deb https://download.sublimetext.com/ apt/stable/')
 	run_command("apt -qq update", True)
 	run_command("apt -y -qq install sublime-text", True)
 
