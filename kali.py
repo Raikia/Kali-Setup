@@ -327,7 +327,7 @@ alias egrep="egrep --color=auto"
 alias fgrep="fgrep --color=auto"
 
 ## tmux
-alias tmux="tmux attach || tmux new"
+alias tmuxr="tmux attach || tmux new"
 
 ## axel
 alias axel="axel -a"
@@ -404,7 +404,7 @@ alias hogs="for i in G M K; do du -ah | grep [0-9]$i | sort -nr -k 1; done | hea
 alias ll="ls -l --block-size=1 --color=auto"
 
 ## nmap
-alias nmap="nmap --reason --open --stats-every 3m --max-retries 1 --max-scan-delay 20 "
+alias nmap="nmap --reason --stats-every 3m --max-retries 1 --max-scan-delay 20 "
 
 ## aircrack-ng
 alias aircrack-ng="aircrack-ng -z"
@@ -716,6 +716,16 @@ setg LPORT 443
 	run_command('apt -y -qq install reaver pixiewps', True)
 	print_success("Done")
 
+	## Install redis
+	do_action("Installing redis-tools")
+	run_command('apt -y -qq install redis-tools', True)
+	print_success('Done')
+
+	## Install mongo
+	do_action("Installing mongo-tools")
+	run_command('apt -y -qq install mongo-tools', True)
+	print_success('Done')
+
 	## Install vulnscan for nmap
 	do_action("Installing nmap vulnscan")
 	run_command('apt -y -qq install nmap curl', True)
@@ -776,6 +786,11 @@ setg LPORT 443
 	run_command("apt -y -qq install p0f", True)
 	print_success("Done")
 
+	## Install gdb-peda
+	do_action("Installing gdb-peda")
+	run_command("apt -y -qq install gdb-peda", True)
+	print_success("Done")
+
 	## Install nbtscan
 	do_action("Installing nbtscan")
 	run_command("apt -y -qq install nbtscan", True)
@@ -823,6 +838,20 @@ setg LPORT 443
 	run_command("apt -y -qq install sshpass", True)
 	print_success("Done")
 
+	## Install firmware-mod-kit
+	do_action("Installing firmware-mod-kit")
+	run_command("apt -y -qq install firmware-mod-kit", True)
+	print_success("Done")
+
+	## Install sublime text
+	do_action("Installing sublime-text")
+	run_command("wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -", True)
+	run_command("apt -y -qq install apt-transport-https", True)
+	run_command('echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list', True)
+	run_command("apt -qq update", True)
+	run_command("apt -y -qq install sublime-text", True)
+
+
 	## Install dbeaver
 	do_action("Installing dbeaver")
 	run_command("apt -y -qq install sshpass", True)
@@ -844,6 +873,15 @@ setg LPORT 443
 	do_action("Installing compiling libraries")
 	run_command("apt -y -qq install gcc g++ gcc-multilib make automake libc6 libc6-i386 libc6-i686 build-essential dpkg-dev", True, True)
 	print_success("Done")
+
+	## Install yed
+	do_action("Installing yEd")
+	yed_link = run_command_output('curl -s "https://www.yworks.com/downloads#yEd" | grep -Po \'filePath&quot;:&quot;([^&]+)&quot;\' | awk -F\\; \'{print $3}\' | awk -F\\& \'{print $1}\' | grep \'.sh\' | head -n 1').decode("ascii").strip()
+	run_command('wget --no-check-certificate --no-cookies "https://www.yworks.com{0}" -O /root/yed.sh'.format(yed_link))
+	run_command('cd /root/; chmod +x /root/yed.sh')
+	run_command('sh /root/yed.sh')
+	run_command('rm /root/yed.sh')
+
 
 	## Installing github repos
 	do_action("Installing various github tools into /opt")
@@ -1284,12 +1322,25 @@ def install_githubs():
 		'Mr-Un1k0d3r/CatMyFish',
 		'Mr-Un1k0d3r/MaliciousMacroGenerator',
 		'Veil-Framework/Veil',
+		'evilmog/ntlmv1-multi',
+		'OWASP/Amass',
+		'dirkjanm/PrivExchange',
+		'rvrsh3ll/FindFrontableDomains',
+		'trustedsec/egressbuster',
+		'HarmJ0y/TrustVisualizer',
+		'aboul3la/Sublist3r',
+		'microsoft/ProcDump-for-Linux',
+		'GreatSCT/GreatSCT',
+		'Arvanaghi/CheckPlease',
+		'trustedsec/ptf',
+		'AlessandroZ/LaZagne'
 	]
 
 	additional_instructions = {
 		'Raikia/CredNinja': ['ln -s /opt/credninja-git/CredNinja.py /usr/local/bin/credninja'],
 		'PowerShellEmpire/Empire': ['export STAGING_KEY=random; cd ./setup; bash ./install.sh'],
 		'ChrisTruncer/EyeWitness': ['cd ./setup/; bash ./setup.sh'],
+		'HarmJ0y/TrustVisualizer': ['pip install networkx'],
 	}
 
 	for proj in projects:
