@@ -880,6 +880,14 @@ setg LPORT 443
 	run_command('wget --no-check-certificate --no-cookies "https://www.yworks.com{0}" -O /opt/yed.sh'.format(yed_link))
 	run_command('chmod +x /opt/yed.sh')
 
+	## Install Ghidra
+	do_action("Installing Ghidra")
+	ghidra_link = run_command_output('curl -s "https://ghidra-sre.org/" | grep \'Download Ghidra\' | cut -d\\" -f6').decode('ascii').strip()
+	run_command('wget --no-check-certificate --no-cookies "https://ghidra-sre.org/{0}" -O /opt/ghidra.zip'.format(ghidra_link))
+	run_command('cd /opt/; unzip ghidra*.zip')
+	run_command('rm /opt/ghidra*.zip')
+
+
 	## Installing github repos
 	do_action("Installing various github tools into /opt")
 	install_githubs()
@@ -1324,7 +1332,8 @@ def install_githubs():
 		'johndekroon/serializekiller',
 		'frohoff/ysoserial',
 		'enjoiz/XXEinjector',
-		'SpiderLabs/HostHunter'
+		'SpiderLabs/HostHunter',
+		'smicallef/spiderfoot',
 	]
 
 	additional_instructions = {
