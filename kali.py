@@ -280,7 +280,7 @@ sleep 2s
 	file_append_once('/etc/bash.bashrc', 'HISTSIZE=10000', 'HISTSIZE')
 	file_append_once('/etc/bash.bashrc', 'HISTFILESIZE=10000', 'HISTFILESIZE')
 	if HIDPI_MONITOR:
-		file_append_once('/root/bash.bashrc', 'export GDK_SCALE=2')
+		file_append_once('/etc/bash.bashrc', 'export GDK_SCALE=2')
 	run_command("bash -c 'source /etc/bash.bashrc'", True, True)
 	print_success("Done")
 
