@@ -888,19 +888,6 @@ setg LPORT 443
 	install_githubs()
 	print_success("Done")
 
-	## Installing oracle JDK
-	do_action("Installing Oracle JDK instead of OpenJDK")
-	jdk_link = run_command_output('curl -s "https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" | grep \'linux-x64.tar.gz\' | head -n 1 | awk -F, \'{print $3}\' | awk -F\'":\' \'{print $2}\' | tr -d \'"\'').decode("ascii").rstrip()
-	run_command('wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "{0}" -O /root/jdk.tar.gz'.format(jdk_link))
-	run_command('cd /root/; tar -xzvf /root/jdk.tar.gz -C /opt/')
-	run_command('rm /root/jdk.tar.gz')
-	jdk_dir = run_command_output('ls -a /opt/ | grep jdk | head -n 1').decode("ascii").rstrip()
-	run_command('update-alternatives --install /usr/bin/java java /opt/{0}/bin/java 1'.format(jdk_dir))
-	run_command('update-alternatives --install /usr/bin/javac javac /opt/{0}/bin/javac 1'.format(jdk_dir))
-	run_command('update-alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so mozilla-javaplugin.so /opt/{0}/jre/lib/amd64/libnpjp2.so 1'.format(jdk_dir))
-	run_command('update-alternatives --set java /opt/{0}/bin/java'.format(jdk_dir))
-	run_command('update-alternatives --set javac /opt/{0}/bin/javac'.format(jdk_dir))
-	run_command('update-alternatives --set mozilla-javaplugin.so /opt/{0}/jre/lib/amd64/libnpjp2.so'.format(jdk_dir))
 
 	## Installing Cobalt Strike
 	do_action("Installing Cobalt Strike into /opt (if license is provided)")
