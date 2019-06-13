@@ -1255,6 +1255,9 @@ def configure_xfce():
 		run_command('xfconf-query -n -c xfwm4 -p /general/theme -t string -s "Default-xhdpi"')
 		run_command('xfconf-query -n -c xfwm4 -p /general/title_font -t string -s "Sans Bold 10"')
 
+		run_command('echo "export GDK_SCALE=2" >> /root/.zshrc')
+		run_command('echo "export GDK_SCALE=2" >> /root/.bashrc')
+
 
 	# remove mail reader from menu
 	file_append_or_replace('/usr/share/applications/exo-mail-reader.desktop', '^NotShowIn=*', 'NotShowIn=XFCE;')
