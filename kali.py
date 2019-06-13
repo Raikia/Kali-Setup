@@ -38,12 +38,23 @@ def main():
 
 
 def show_header():
+	global TOTAL_PARTS, CURRENT_STAGE, YOUR_NAME, YOUR_EMAIL, TIMEZONE, COBALTSTRIKE_LICENSE, BLEEDING_EDGE_REPOS
 	print("Starting Kali configuration script!")
 	print("       By Chris King")
 	print("")
 	print(Fore.YELLOW + "This script expects a new Kali install from the normal ISO")
 	print("It is not recommended running this on the non-default ISO" + Fore.RESET)
 	print("")
+	print(" Your name:           " + YOUR_NAME)
+	print("Your email:           " + YOUR_EMAIL)
+	print("  Timezone:           " + TIMEZONE)
+	print("4k Monitor?           " + ("Yes" if HIDPI_MONITOR else "No"))
+	print("CS License:           " + COBALTSTRIKE_LICENSE)
+	print("Install XFCE?         " + ("Yes" if INSTALL_NEW_DE else "No"))
+	print("Bleeding edge repos?  " + ("Yes" if BLEEDING_EDGE_REPOS else "No"))
+	print("")
+	print(Fore.YELLOW + "If the above is not correct, CTRL+C right now and edit lines 11-18 of this script!" + Fore.RESET)
+	print()
 	print(Fore.RED + "Pausing 10 seconds to make sure you want to continue. CTRL+C otherwise" + Fore.RESET)
 	time.sleep(10)
 
