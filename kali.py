@@ -73,7 +73,7 @@ def check_environment():
 		print_success("We are root!")
 
 def launch_configuration():
-	global TOTAL_PARTS, CURRENT_STAGE, YOUR_NAME, YOUR_EMAIL, TIMEZONE, COBALTSTRIKE_LICENSE, BLEEDING_EDGE_REPOS
+	global TOTAL_PARTS, CURRENT_STAGE, YOUR_NAME, YOUR_EMAIL, TIMEZONE, COBALTSTRIKE_LICENSE, BLEEDING_EDGE_REPOS, HIDPI_MONITOR
 
 	## Set timezone
 	do_action("Setting timezone")
@@ -279,6 +279,8 @@ sleep 2s
 	file_append_once('/etc/bash.bashrc', 'shopt -sq nocaseglob', 'nocaseglob')
 	file_append_once('/etc/bash.bashrc', 'HISTSIZE=10000', 'HISTSIZE')
 	file_append_once('/etc/bash.bashrc', 'HISTFILESIZE=10000', 'HISTFILESIZE')
+	if HIDPI_MONITOR:
+		file_append_once('/root/bash.bashrc', 'export GDK_SCALE=2')
 	run_command("bash -c 'source /etc/bash.bashrc'", True, True)
 	print_success("Done")
 
@@ -484,6 +486,8 @@ alias msfconsole="systemctl start postgresql; msfdb start; msfconsole \"\$@\""
 	file_append_once('/root/.zshrc', 'setopt correctall', 'correctall')
 	file_append_once('/root/.zshrc', 'setopt globdots', 'globdots')
 	file_append_once('/root/.zshrc', 'source $HOME/.bash_aliases', '.bash_aliases')
+	if HIDPI_MONITOR:
+		file_append_once('/root/.zshrc', 'export GDK_SCALE=2')
 	file_replace('/root/.zshrc', 'ZSH_THEME=.*', 'ZSH_THEME="mh"')
 	file_replace('/root/.zshrc', 'plugins=.*', 'plugins=(git-extras tmux dirhistory python pip)')
 	file_append_once('/root/.zshrc', 'source $HOME/.xinitrc')
@@ -1254,9 +1258,6 @@ def configure_xfce():
 		run_command('xfconf-query -n -c xsettings -p /Gtk/IconSizes -t string -s "gtk-large-toolbar=32,32:gtk-small-toolbar=24,24:gtk-menu=32,32:gtk-dialog=88,88:gtk-button=32,32:gtk-dnd=32,32"')
 		run_command('xfconf-query -n -c xfwm4 -p /general/theme -t string -s "Default-xhdpi"')
 		run_command('xfconf-query -n -c xfwm4 -p /general/title_font -t string -s "Sans Bold 10"')
-
-		run_command('echo "export GDK_SCALE=2" >> /root/.zshrc')
-		run_command('echo "export GDK_SCALE=2" >> /root/.bashrc')
 
 
 	# remove mail reader from menu
