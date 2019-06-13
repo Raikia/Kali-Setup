@@ -847,7 +847,7 @@ setg LPORT 443
 	do_action("Installing sublime-text")
 	run_command("wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | apt-key add -", True)
 	run_command("apt -y -qq install apt-transport-https", True)
-	run_command('echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list', True)
+	run_command('echo "deb https://download.sublimetext.com/ apt/stable/" > /etc/apt/sources.list.d/sublime-text.list', True)
 	run_command("apt -qq update", True)
 	run_command("apt -y -qq install sublime-text", True)
 
@@ -875,13 +875,10 @@ setg LPORT 443
 	print_success("Done")
 
 	## Install yed
-	do_action("Installing yEd")
+	do_action("Installing yEd...unfortunately this isn't silent so really we're just downloading the installer to /opt/yed.sh")
 	yed_link = run_command_output('curl -s "https://www.yworks.com/downloads#yEd" | grep -Po \'filePath&quot;:&quot;([^&]+)&quot;\' | awk -F\\; \'{print $3}\' | awk -F\\& \'{print $1}\' | grep \'.sh\' | head -n 1').decode("ascii").strip()
-	run_command('wget --no-check-certificate --no-cookies "https://www.yworks.com{0}" -O /root/yed.sh'.format(yed_link))
-	run_command('cd /root/; chmod +x /root/yed.sh')
-	run_command('sh /root/yed.sh')
-	run_command('rm /root/yed.sh')
-
+	run_command('wget --no-check-certificate --no-cookies "https://www.yworks.com{0}" -O /opt/yed.sh'.format(yed_link))
+	run_command('chmod +x /opt/yed.sh')
 
 	## Installing github repos
 	do_action("Installing various github tools into /opt")
@@ -1320,7 +1317,14 @@ def install_githubs():
 		'GreatSCT/GreatSCT',
 		'Arvanaghi/CheckPlease',
 		'trustedsec/ptf',
-		'AlessandroZ/LaZagne'
+		'AlessandroZ/LaZagne',
+		'b-mueller/apkx',
+		'nccgroup/demiguise',
+		'gnuradio/gnuradio',
+		'johndekroon/serializekiller',
+		'frohoff/ysoserial',
+		'enjoiz/XXEinjector',
+		'SpiderLabs/HostHunter'
 	]
 
 	additional_instructions = {
