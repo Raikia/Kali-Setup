@@ -891,6 +891,10 @@ setg LPORT 443
 	run_command('cd /opt/; unzip ghidra*.zip')
 	run_command('rm /opt/ghidra*.zip')
 
+	## Install np (gnmap parser)
+	do_action("Installing np")
+	file_download("https://raw.githubusercontent.com/Raikia/Misc-scripts/master/np.py", "/usr/local/bin/np")
+	run_command('chmod +x /usr/local/bin/np')
 
 	## Installing github repos
 	do_action("Installing various github tools into /opt")
