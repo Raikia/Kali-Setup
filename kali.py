@@ -7,7 +7,6 @@ import subprocess
 import sys
 import re
 
-
 ### SET THESE VARIABLES!
 YOUR_NAME = "Anonymous"
 YOUR_EMAIL = "anonymous@domain.com"
@@ -878,6 +877,23 @@ setg LPORT 443
 	run_command("apt -y -qq install gcc g++ gcc-multilib make automake libc6 libc6-i386 libc6-i686 build-essential dpkg-dev", True, True)
 	print_success("Done")
 
+	## Install bridge-utils
+	do_action("Installing bridge-utils")
+	run_command("apt -y -qq install bridge-utils", True, True)
+	print_success("Done")
+
+	## Install ruler
+	do_action("Installing ruler")
+	run_command("GOPATH=/opt/ruler go get github.com/sensepost/ruler", True, True)
+	run_command("ln -s /opt/ruler/bin/ruler /usr/local/bin")
+	print_success("Done")
+
+	## Install amass
+	#do_action("Installing amass")
+	#run_command("GOPATH=/opt/amass go get -u github.com/OWASP/Amass/...", True, True)
+	#run_command("cd /opt/amass/src/github.com/OWASP/Amass; go install ./...")
+	#print_success("Done")
+
 	## Install yed
 	do_action("Installing yEd...unfortunately this isn't silent so really we're just downloading the installer to /opt/yed.sh")
 	yed_link = run_command_output('curl -s "https://www.yworks.com/downloads#yEd" | grep -Po \'filePath&quot;:&quot;([^&]+)&quot;\' | awk -F\\; \'{print $3}\' | awk -F\\& \'{print $1}\' | grep \'.sh\' | head -n 1').decode("ascii").strip()
@@ -1323,7 +1339,6 @@ def install_githubs():
 		'Mr-Un1k0d3r/MaliciousMacroGenerator',
 		'Veil-Framework/Veil',
 		'evilmog/ntlmv1-multi',
-		'OWASP/Amass',
 		'dirkjanm/PrivExchange',
 		'rvrsh3ll/FindFrontableDomains',
 		'trustedsec/egressbuster',
