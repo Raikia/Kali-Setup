@@ -34,7 +34,7 @@ class InstallerTemplate:
         file_download(self._DOWNLOAD_LINK, "/root/cobaltstrike.tgz")
         print_status("Decompressing cobaltstrike", 1)
         run_command("tar -zxf /root/cobaltstrike.tgz -C /opt/")
-        run_command("/root/cobaltstrike.tgz")
+        run_command("rm /root/cobaltstrike.tgz")
         file_write("/root/.cobaltstrike.license", self._LICENSE)
         print_status("Updating cobaltstrike to licensed version", 1)
         run_command("cd /opt/cobaltstrike/; ./update")
@@ -42,7 +42,7 @@ class InstallerTemplate:
         
         print_status("Installing some useful scripts", 1)
         make_dir("/opt/cobaltstrike_scripts")
-        for repo in _SCRIPTS:
+        for repo in self._SCRIPTS:
             github_clone(repo, "/opt/cobaltstrike_scripts")
         run_command("ln -sf /opt/cobaltstrike_scripts/ /opt/cobaltstrike/scripts")
         print_success("CobaltStrike Scripts installed to /opt/cobaltstrike_scripts/", 1)

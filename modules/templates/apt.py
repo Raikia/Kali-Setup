@@ -28,7 +28,7 @@ class InstallerTemplate:
         "Aircrack suite": ["aircrack-ng curl"],
         "reaver": ["reaver", "pixiewps"],
         "redis": ["redis-tools"],
-        "MongoDB Tools": ["mongo-tools"],
+        "MongoDB Tools": ["mongodb-org-tools"],
         "nmap": ["nmap"],
         "MinGW": ["mingw-w64", "binutils-mingw-w64", "gcc-mingw-w64", "cmake", "mingw-w64-i686-dev", "mingw-w64-x86-64-dev", "mingw-w64-tools", "gcc-mingw-w64-i686", "gcc-mingw-w64-x86-64"],
         "Wine": ["wine", "winetricks", "wine32"],

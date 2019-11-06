@@ -41,5 +41,5 @@ setg LPORT 443
 
         print_status("Starting metasploit for the first time.", 1)
         run_command("msfdb start")
-        run_command("msfconsole -q -x 'version;db_status;sleep 30;exit")
+        run_command("msfconsole -q -x 'version;db_status;sleep 30;exit'")
         print_success("Done!", 1)

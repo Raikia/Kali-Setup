@@ -84,7 +84,7 @@ class Installer:
         run_command("apt -y -qq clean")
         run_command("apt -y -qq autoremove")
         run_command('apt -y -qq update')
-        run_command('export DEBIAN_FRONTEND=noninteractive; apt -qq update && APT_LISTCHANGES_FRONTEND=none apt -o Dpkg::Options::="--force-confnew" -y dist-upgrade --fix-missing')
+        run_command('export DEBIAN_FRONTEND=noninteractive; APT_LISTCHANGES_FRONTEND=none apt -o Dpkg::Options::="--force-confnew" -y dist-upgrade --fix-missing')
         run_command("apt -y -qq clean")
         run_command("apt -y -qq autoremove")
         print_success("Done!", 1)
