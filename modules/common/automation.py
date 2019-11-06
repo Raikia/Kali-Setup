@@ -50,14 +50,14 @@ def file_download(location, destination, safe=False):
 def command_exists(cmd):
     return os.system("which {0} > /dev/null 2>&1".format(cmd.split(" ")[0])) == 0
 
-def run_command(cmd, safe=False, print_error=True):
+def run_command(cmd, safe=False, show_error=True):
     cmd_run = "{0} {1}".format(cmd, " > /dev/null 2>&1" if not _VERBOSE else "")
     if _DRY_RUN and not safe:
         print_status("Would have run: " + cmd_run, 1)
         ret = 0
     else:
         ret = os.system(cmd_run)
-    if ret != 0 and print_error:
+    if ret != 0 and show_error:
         print_error('Failed running "{0}"'.format(cmd_run))
     return ret
 

@@ -72,7 +72,7 @@ class Installer:
         is_dry_run = self._config.get_config().get('general', 'dry run', fallback=False)
 
         print_status("Checking internet access", 1)
-        ret = run_command('ping -c 1 -W 10 www.google.com', safe=True, print_error=False)
+        ret = run_command('ping -c 1 -W 10 www.google.com', safe=True, show_error=False)
         if is_dry_run:
             ret = 0
         if ret != 0:
@@ -95,7 +95,7 @@ class Installer:
             val = run_command_with_output('dpkg -l | grep linux-image- | grep -vc meta')
             if int(val) > 1:
                 print_status("Detected {0} kernels".format(val.strip()), 2)
-                val = run_command("dpkg -l | grep linux-image | grep -v meta | sort -t '.' -k 2 -g | tail -n 1 | grep \"$(uname -r)\"", print_error=False)
+                val = run_command("dpkg -l | grep linux-image | grep -v meta | sort -t '.' -k 2 -g | tail -n 1 | grep \"$(uname -r)\"", show_error=False)
                 if val == 0:
                     print_success("You are running the latest kernel!  All good", 1)
                 else:
