@@ -45,6 +45,7 @@ class Config:
 
     def generate_config(self, outfile):
         if self._config is None:
+            self._config = configparser.ConfigParser()
             self._config.read_dict(Config.DEFAULTS)
         with open(outfile, 'w') as writefile:
             writefile.write(self._config)
