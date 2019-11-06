@@ -45,7 +45,10 @@ class Installer:
         print_status("Running {0} installation modules...".format(len(ok_modules)))       
         for mod in ok_modules:
             print_status("Running installation module: {0}...".format(mod))
-            self._installers[mod].install(self._config.get_config())
+            try:
+                self._installers[mod].install(self._config.get_config())
+            except Exception as e:
+                print_error("Module '{0}' had runtime error: {1}".format(mod, e))
             print_success("Done with {0}!".format(mod))
         print_status("Executing post-module scripts...")
         self.after_modules()

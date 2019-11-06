@@ -36,7 +36,7 @@ class InstallerTemplate:
         run_command('find ~/ -maxdepth 1 -mindepth 1 -type d \( -name "Documents" -o -name "Music" -o -name "Pictures" -o -name "Public" -o -name "Templates" -o -name "Videos" \) -empty -delete')
         apt_install('xdg-user-dirs')
         run_command('xdg-user-dirs-update')
-        run_command('run -f /root/.cache/sessions/*')
+        run_command('rm -f /root/.cache/sessions/*')
         print_success("Done", 1)
 
         print_status("Disabling screensaver", 1)
