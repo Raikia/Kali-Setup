@@ -48,7 +48,7 @@ class Config:
             self._config = configparser.ConfigParser()
             self._config.read_dict(Config.DEFAULTS)
         with open(outfile, 'w') as writefile:
-            writefile.write(self._config)
+            self._config.write(writefile)
 
     def load_config(self):
         self._config = configparser.ConfigParser()
