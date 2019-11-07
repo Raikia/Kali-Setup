@@ -18,12 +18,9 @@ class InstallerTemplate:
     def check(self, config):
         if config.get('cobaltstrike', 'license', fallback="") == "":
             return "Missing license!"
-        post_data = "dlkey={0}".format(config.get('cobaltstrike', 'license'))
-        license_link = run_command_with_output("curl -s --data {0} 'https://cobaltstrike.com/download' | grep -m 1 -oP '(downloads/[a-z0-9]{{32}}/cobaltstrike-trial)'".format(escape(post_data)), safe=True).rstrip()
-        if license_link == "":
+        self.load_download_link(config)
+        if self._DOWNLOAD_LINK is None:
             return "Invalid Cobalt Strike License!"
-        self._DOWNLOAD_LINK = "https://cobaltstrike.com/{0}.tgz".format(license_link)
-        self._LICENSE = config.get('cobaltstrike', 'license')
         return True
 
     def install(self, config):
@@ -31,6 +28,10 @@ class InstallerTemplate:
         apt_install("default-jre")
         print_status("Java installed!", 1)
         print_status("Downloading cobaltstrike", 1)
+        self.load_download_link(config)
+        if self._DOWNLOAD_LINK is None:
+            print_error("CobaltStrike license is invalid now!", 1)
+            return
         file_download(self._DOWNLOAD_LINK, "/root/cobaltstrike.tgz")
         print_status("Decompressing cobaltstrike", 1)
         run_command("tar -zxf /root/cobaltstrike.tgz -C /opt/")
@@ -46,3 +47,14 @@ class InstallerTemplate:
             github_clone(repo, "/opt/cobaltstrike_scripts")
         run_command("ln -sf /opt/cobaltstrike_scripts/ /opt/cobaltstrike/scripts")
         print_success("CobaltStrike Scripts installed to /opt/cobaltstrike_scripts/", 1)
+
+
+    def load_download_link(self, config):
+        post_data = "dlkey={0}".format(config.get('cobaltstrike', 'license'))
+        license_link = run_command_with_output("curl -s --data {0} 'https://cobaltstrike.com/download' | grep -m 1 -oP '(downloads/[a-z0-9]{{32}}/cobaltstrike-trial)'".format(escape(post_data)), safe=True).rstrip()
+        if license_link != "":
+            self._DOWNLOAD_LINK = "https://cobaltstrike.com/{0}.tgz".format(license_link)
+            self._LICENSE = config.get('cobaltstrike', 'license')
+        else:
+            self._DOWNLOAD_LINK = None
+            self._LICENSE = None
