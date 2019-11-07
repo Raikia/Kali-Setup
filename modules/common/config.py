@@ -10,6 +10,7 @@ class Config:
     DEFAULTS = {
         'general': {
             'timezone': 'America/Chicago',
+            'update first': 'yes',
             'latest kernel': 'yes',
             '4k': 'no',
             'default shell': 'zsh',

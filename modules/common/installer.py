@@ -83,13 +83,16 @@ class Installer:
         print_success("Looks good, internet works", 1)
 
         print_status("Running system updates before starting. This may take a while...", 1)
-        run_command("apt -y -qq clean")
-        run_command("apt -y -qq autoremove")
-        run_command('apt -y -qq update')
-        run_command('export DEBIAN_FRONTEND=noninteractive; APT_LISTCHANGES_FRONTEND=none apt -o Dpkg::Options::="--force-confnew" -y dist-upgrade --fix-missing')
-        run_command("apt -y -qq clean")
-        run_command("apt -y -qq autoremove")
-        print_success("Done!", 1)
+        if self._config.get_config().getboolean('general', 'update first', fallback=True) and not is_dry_run:
+            run_command("apt -y -qq clean")
+            run_command("apt -y -qq autoremove")
+            run_command('apt -y -qq update')
+            run_command('export DEBIAN_FRONTEND=noninteractive; APT_LISTCHANGES_FRONTEND=none apt -o Dpkg::Options::="--force-confnew" -y dist-upgrade --fix-missing')
+            run_command("apt -y -qq clean")
+            run_command("apt -y -qq autoremove")
+            print_success("Done!", 1)
+        else:
+            print_success("Skipping!", 1)
 
 
         print_status("Checking if we are running as the latest kernel", 1)
