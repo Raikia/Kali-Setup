@@ -15,7 +15,7 @@ class Config:
             '4k': 'no',
             'default shell': 'zsh',
             'verbose': 'no',
-            'modules': 'kali, apt, git, cobaltstrike, vm, github, vim, metasploit, samba, dbeaver, yed, ghidra, bash, aliases, zsh, ntp, firefox'
+            'modules': 'kali, vm, apt, git, github, vim, metasploit, samba, dbeaver, yed, ghidra, bash, aliases, zsh, ntp, firefox, cobaltstrike'
         },
         'kali': {
             'bleeding edge repos': 'yes'

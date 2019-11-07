@@ -103,6 +103,9 @@ class Installer:
                 val = run_command("dpkg -l | grep linux-image | grep -v meta | sort -t '.' -k 2 -g | tail -n 1 | grep \"$(uname -r)\"", show_error=False)
                 if val == 0:
                     print_success("You are running the latest kernel!  All good", 1)
+                    print_status("Installing the latest kernel headers", 1)
+                    run_command('apt -y -qq install make gcc "linux-headers-$(uname -r)"')
+                    print_success("Done", 1)
                 else:
                     print_error("You are not running the latest kernel but its installed already!", 1)
                     print_error("Reboot and then re-run this script!")
@@ -110,11 +113,6 @@ class Installer:
         else:
             print_success("Skipping!", 1)
 
-
-
-        print_status("Installing the latest kernel headers", 1)
-        run_command('apt -y -qq install make gcc "linux-headers-$(uname -r)"')
-        print_success("Done", 1)
 
 
         print_status("Setting timezone", 1)

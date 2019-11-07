@@ -44,8 +44,6 @@ class InstallerTemplate:
         "Sublime Text 3": ["sublime-text"],
         "SSH Server": ["openssh-server"],
         "bridge utils": ["bridge-utils"],
-
-
     }
 
     _COMMANDS_BEFORE = {
