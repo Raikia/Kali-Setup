@@ -77,12 +77,14 @@ class InstallerTemplate:
     def install(self, config):
         print_status("Installing various github tools into /opt", 1)
         for proj in self._REPOS:
+            print_status("Cloning {0}...".format(proj), 2)
             github_clone(proj, "/opt/")
             folder_name = "/opt/{0}-git".format(proj.replace('/','_').lower())
             run_command("cd {0}; git pull -q".format(folder_name))
             if proj in self._ADDITIONAL_INSTRUCTIONS:
                 for instr in self._ADDITIONAL_INSTRUCTIONS[proj]:
                     run_command("cd {0}; {1}".format(folder_name, instr))
+            print_success("Done!", 2)
         print_success("Done installing github tools!", 1)
         
         print_status("Writing GitHub update script", 1)
