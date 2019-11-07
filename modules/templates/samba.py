@@ -27,9 +27,9 @@ class InstallerTemplate:
         print_success("Done!", 1)
 
         print_status("Configuring samba", 1)
-        run_command("groupdel smbgroup")
+        run_command("groupdel smbgroup", show_error=False)
         run_command("groupadd smbgroup")
-        run_command("userdel samba")
+        run_command("userdel samba", show_error=False)
         run_command("useradd -r -M -d /nonexistent -s /bin/false -c 'Samba User' -g smbgroup samba")
         file_backup('/etc/samba/smb.conf')
         if not file_contains('/etc/samba/smb.conf', '[shared]'):
@@ -38,6 +38,6 @@ class InstallerTemplate:
         run_command('chown -R samba:smbgroup /var/samba/')
         run_command('chmod -R 0755 /var/samba/')
         run_command('touch /etc/printcap')
-        run_command('systemctl stop samba')
-        run_command('systemctl disable samba')
+        run_command('systemctl stop smbd')
+        run_command('systemctl disable smbd')
         print_success("Done!", 1)
