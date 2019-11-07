@@ -44,6 +44,7 @@ class InstallerTemplate:
         "Sublime Text 3": ["sublime-text"],
         "SSH Server": ["openssh-server"],
         "bridge utils": ["bridge-utils"],
+        "Mobile Tools": ["aapt", "abe", "adb", "apktool", "burp", "bytecode-viewer", "enjarify", "file", "gedit", "ideviceinstaller", "smali", "sqlite3"]
     }
 
     _COMMANDS_BEFORE = {
