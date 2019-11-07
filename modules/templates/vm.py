@@ -31,7 +31,7 @@ class InstallerTemplate:
         print_success("Done!", 1)
 
         if self._TYPE == 'VMware':
-            print_status("WRiting mount shared folders script", 1)
+            print_status("Writing mount shared folders script", 1)
             file_contents = """#!/bin/bash
 vmware-hgfsclient | while read folder; do
     echo "[i] Mounting ${folder}    (/mnt/hgfs/${folder})"

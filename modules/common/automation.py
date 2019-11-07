@@ -37,7 +37,9 @@ def apt_install(packages):
     return run_command(cmd)
 
 def github_clone(repo, dest_folder):
-    dest_folder += "/{0}-git".format(repo.replace('/','_').lower())
+    if not dest_folder.endswith('/'):
+        dest_folder += "/"
+    dest_folder += "{0}-git".format(repo.replace('/','_').lower())
     cmd = 'git clone --recurse-submodules https://github.com/{0}.git {1}'.format(repo, escape(dest_folder))
     return run_command(cmd)
 
@@ -75,9 +77,9 @@ def make_dir(directory):
         print_status("Would have created directory: " + directory, 1)
         return
     try:
-        os.mkdirs(directory)
-    except Exception:
-        print_error("Unable to make the directory {0}".format(directory))
+        os.makedirs(directory)
+    except Exception as e:
+        print_error("Unable to make the directory {0}: {1}".format(directory, e))
 
 def file_exists(filename):
     return os.path.exists(filename)

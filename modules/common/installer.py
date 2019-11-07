@@ -42,14 +42,16 @@ class Installer:
         print_status("Executing pre-module scripts...")
         self.before_modules()
         print_success("Done with pre-module scripts")
-        print_status("Running {0} installation modules...".format(len(ok_modules)))       
+        print_status("Running {0} installation modules!".format(len(ok_modules)))       
+        counter = 1
         for mod in ok_modules:
-            print_status("Running installation module: {0}...".format(mod))
+            print_status("[{0}/{1}] Running installation module: {2}...".format(counter, len(ok_modules), mod))
             try:
                 self._installers[mod].install(self._config.get_config())
             except Exception as e:
                 print_error("Module '{0}' had runtime error: {1}".format(mod, e))
             print_success("Done with {0}!".format(mod))
+            counter += 1
         print_status("Executing post-module scripts...")
         self.after_modules()
         print_success("Done with post-module scripts")
@@ -80,7 +82,7 @@ class Installer:
             sys.exit(1)
         print_success("Looks good, internet works", 1)
 
-        print_status("Running system updates before starting", 1)
+        print_status("Running system updates before starting. This may take a while...", 1)
         run_command("apt -y -qq clean")
         run_command("apt -y -qq autoremove")
         run_command('apt -y -qq update')

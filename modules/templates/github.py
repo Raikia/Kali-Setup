@@ -55,20 +55,20 @@ class InstallerTemplate:
     ]
 
     _ADDITIONAL_INSTRUCTIONS = {
-        'Raikia/CredNinja': ['ln -s /opt/credninja-git/CredNinja.py /usr/local/bin/credninja'],
+        'Raikia/CredNinja': ['ln -s /opt/raikia_credninja-git/CredNinja.py /usr/local/bin/credninja'],
         'PowerShellEmpire/Empire': ['export STAGING_KEY=random; cd ./setup; bash ./install.sh'],
         'ChrisTruncer/EyeWitness': ['cd ./setup/; bash ./setup.sh'],
         'HarmJ0y/TrustVisualizer': ['pip install networkx'],
-        'Raikia/Misc-scripts': ['ln -s /opt/misc-scripts-git/np.py /usr/local/bin/np'],
+        'Raikia/Misc-scripts': ['ln -s /opt/raikia_misc-scripts-git/np.py /usr/local/bin/np'],
         'rofl0r/proxychains-ng': [
-            'cd /opt/proxychains-ng-git/; git pull -q', 
-            'cd /opt/proxychains-ng-git/; make -s clean',
-            'cd /opt/proxychains-ng-git/; ./configure --prefix=/usr --sysconfdir=/etc',
-            'cd /opt/proxychains-ng-git/; make -s',
-            'cd /opt/proxychains-ng-git/; make -s install',
+            'cd /opt/rofl0r_proxychains-ng-git/; git pull -q', 
+            'cd /opt/rofl0r_proxychains-ng-git/; make -s clean',
+            'cd /opt/rofl0r_proxychains-ng-git/; ./configure --prefix=/usr --sysconfdir=/etc',
+            'cd /opt/rofl0r_proxychains-ng-git/; make -s',
+            'cd /opt/rofl0r_proxychains-ng-git/; make -s install',
             'ln -sf /usr/bin/proxychains4 /usr/local/bin/proxychains-ng'
         ],
-        'scipag/vulscan': ['ln -s /opt/vulscan-git /usr/share/nmap/scripts/vulnscan']
+        'scipag/vulscan': ['ln -s /opt/scipag_vulscan-git /usr/share/nmap/scripts/vulnscan']
     }
 
     def check(self, config):
