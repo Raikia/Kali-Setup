@@ -46,3 +46,8 @@ sleep 2s
             run_command("chmod +x /usr/local/sbin/mount-shared-folders")
             run_command("ln -sf '/usr/local/sbin/mount-shared-folders' '/root/Desktop/mount-shared-folders.sh'")
             print_success("Done")
+
+        if self._TYPE is not None:
+            print_status("Disabling SMART monitoring because we're in a VM")
+            run_command("systemctl disable smartmontools.service", show_error=False)
+            print_success("Done")
