@@ -8,6 +8,9 @@ from modules.common import config
 from modules.common import installer
 
 def main():
+    if os.geteuid() != 0:
+        print_error("You must run this script as root!")
+        sys.exit(1)
     config_file_location = None
     if len(sys.argv) == 2:
         if sys.argv[1] == '-g':
