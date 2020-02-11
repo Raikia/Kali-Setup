@@ -14,6 +14,8 @@ class Config:
             'latest kernel': 'yes',
             '4k': 'no',
             'default shell': 'zsh',
+            'default desktop env': 'kde',
+            'metapackage': 'large',
             'verbose': 'no',
             'modules': 'kali, vm, apt, git, github, vim, metasploit, samba, dbeaver, yed, ghidra, bash, aliases, zsh, ntp, firefox, cobaltstrike'
         },

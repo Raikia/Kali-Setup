@@ -129,6 +129,41 @@ class Installer:
             run_command('dpkg-reconfigure -f noninteractive tzdata')
             print_success("Done!", 1)
 
+        new_de = self._config.get_config().get('general', 'default desktop env', fallback="")
+        if new_de != "":
+            print_status("Installing desktop environment: {0}".format(new_de), 1)
+            if new_de == "kde":
+                apt_install("kali-desktop-kde")
+            elif new_de == "xfce":
+                apt_install("kali-desktop-xfce")
+            elif new_de == "gnome":
+                apt_install("kali-desktop-gnome")
+            elif new_de == "i3":
+                apt_install("kali-desktop-i3")
+            elif new_de == "lxde":
+                apt_install("kali-desktop-lxde")
+            else:
+                print_error("Unknown option...",1)
+            print_success("Done!", 1)
+
+        print_status("Ensuring core and lvie are installed...", 1)
+        apt_install(["kali-linux-core", "kali-desktop-live"])
+        print_success("Done!", 1)
+
+
+        metapackage = self._config.get_config().get('general', 'metapackage', fallback="")
+        if metapackage != "":
+            print_status("Installing metapackage: {0}".format(metapackage), 1)
+            if metapackage == "default":
+                apt_install("kali-linux-default")
+            elif metapackage == "large":
+                apt_install("kali-linux-large")
+            elif metapackage == "everything":
+                apt_install("kali-linux-everything")
+            else:
+                print_error("Unknown metapackage...", 1)
+            print_success("Done!", 1)
+
 
 
     def after_modules(self):
