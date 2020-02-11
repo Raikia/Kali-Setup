@@ -136,7 +136,7 @@ def file_backup(filename):
         file_write(new_filename, text)
 
 def get_user():
-    return os.getenv('USER')
+    return os.getenv('SUDO_USER')
 
 def get_home_folder():
-    return os.getenv('HOME')
+    return '/home/{0}'.format(get_user())
