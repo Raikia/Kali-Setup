@@ -15,6 +15,7 @@ class Installer:
 
     def run(self):
         print_status("Starting installer...")
+
         self.load_installers()
         print_status("{0} installers loaded!".format(len(self._installers)))
 
@@ -174,6 +175,7 @@ class Installer:
             if path == "":
                 print_error("Invalid shell: '{0}'".format(default_shell), 1)
             else:
-                run_command('chsh -s "{0}"'.format(default_shell))
+                run_command('chsh -s "{0}" "{0}"'.format(path, get_user()))
+                run_command('chsh -s "{0}" root'.format(path))
                 print_success("Done!", 1)
     

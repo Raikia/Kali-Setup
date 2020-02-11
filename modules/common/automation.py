@@ -134,3 +134,9 @@ def file_backup(filename):
             new_filename += ".bkup"
         text = file_read(filename)
         file_write(new_filename, text)
+
+def get_user():
+    return os.getenv('USER')
+
+def get_home_folder():
+    return os.getenv('HOME')
