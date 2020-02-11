@@ -12,12 +12,9 @@ class InstallerTemplate:
     }
 
     def check(self, config):
-        if not command_exists('dmidecode'):
-            return "'dmidecode' doesn't exist so probably not running in a VM"
-
-        if run_command('dmidecode | grep -iq vmware', safe=True) == 0:
+        if run_command('dmesg | grep hypervisor | grep -iq vmware', safe=True) == 0:
             self._TYPE = "VMware"
-        elif run_command('dmidecode | grep -iq virtualbox', safe=True) == 0:
+        elif run_command('dmesg | grep hypervisor | grep -iq virtualbox', safe=True) == 0:
             self._TYPE = "Virtualbox"
 
         if self._TYPE is None:
