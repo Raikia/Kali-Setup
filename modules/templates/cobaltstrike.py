@@ -51,7 +51,7 @@ class InstallerTemplate:
 
     def load_download_link(self, config):
         post_data = "dlkey={0}".format(config.get('cobaltstrike', 'license'))
-        license_link = run_command_with_output("curl -s --data {0} 'https://cobaltstrike.com/download' | grep -m 1 -oP '(downloads/[a-z0-9]{{32}}/cobaltstrike-trial)'".format(escape(post_data)), safe=True).rstrip()
+        license_link = run_command_with_output("curl -s --data {0} 'https://cobaltstrike.com/download' | grep -m 1 -oP '(downloads/[a-z0-9]{{32}}/cobaltstrike-dist)'".format(escape(post_data)), safe=True).rstrip()
         if license_link != "":
             self._DOWNLOAD_LINK = "https://cobaltstrike.com/{0}.tgz".format(license_link)
             self._LICENSE = config.get('cobaltstrike', 'license')
