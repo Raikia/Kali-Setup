@@ -39,8 +39,6 @@ class InstallerTemplate:
         'aboul3la/Sublist3r',
         'microsoft/ProcDump-for-Linux',
         'GreatSCT/GreatSCT',
-        'Arvanaghi/CheckPlease',
-        'trustedsec/ptf',
         'AlessandroZ/LaZagne',
         'b-mueller/apkx',
         'nccgroup/demiguise',
