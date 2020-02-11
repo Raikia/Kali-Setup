@@ -36,14 +36,14 @@ class InstallerTemplate:
         run_command('find ~/ -maxdepth 1 -mindepth 1 -type d \( -name "Documents" -o -name "Music" -o -name "Pictures" -o -name "Public" -o -name "Templates" -o -name "Videos" \) -empty -delete')
         apt_install('xdg-user-dirs')
         run_command('xdg-user-dirs-update')
-        run_command('rm -f /root/.cache/sessions/*')
+        run_command('rm -f {0}/.cache/sessions/*'.format(get_home_folder()))
         print_success("Done", 1)
 
         print_status("Disabling screensaver", 1)
         run_command("xset s 0 0")
         run_command("xset s off")
-        file_append_once('/root/.xinitrc', "xset s off")
-        file_append_once('/root/.xinitrc', "xset b off")
+        file_append_once('{0}/.xinitrc'.format(get_home_folder()), "xset s off")
+        file_append_once('{0}/.xinitrc'.format(get_home_folder()), "xset b off")
         if command_exists('gsettings'):
             run_command('gsettings set org.gnome.desktop.session idle-delay 0')
         print_success("Done!", 1)

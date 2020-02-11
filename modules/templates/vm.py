@@ -41,7 +41,7 @@ sleep 2s
 """
             file_write('/usr/local/sbin/mount-shared-folders', file_contents)
             run_command("chmod +x /usr/local/sbin/mount-shared-folders")
-            run_command("ln -sf '/usr/local/sbin/mount-shared-folders' '/root/Desktop/mount-shared-folders.sh'")
+            run_command("ln -sf '/usr/local/sbin/mount-shared-folders' '{0}/Desktop/mount-shared-folders.sh'".format(get_home_folder()))
             print_success("Done")
 
         if self._TYPE is not None:

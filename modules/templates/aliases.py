@@ -204,8 +204,8 @@ alias msfconsole="systemctl start postgresql; msfdb start; msfconsole \"\$@\""
         print_success("Done", 1)
 
         print_status("Configuring local aliases")
-        file_write('/root/.aliases', self._LOCAL_ALIAS)
-        run_command('touch /root/.aliases')
-        file_replace('/root/.bashrc', '#alias', 'alias')
-        file_replace('/root/.aliases', '#alias', 'alias')
-        file_append_once('/root/.bashrc', "if [ -f ~/.aliases ]; then\n. ~/.aliases\nfi", '~/.aliases')
+        file_write('{0}/.aliases'.format(get_home_folder()), self._LOCAL_ALIAS)
+        run_command('touch {0}/.aliases'.format(get_home_folder()))
+        file_replace('{0}/.bashrc'.format(get_home_folder()), '#alias', 'alias')
+        file_replace('{0}/.aliases'.format(get_home_folder()), '#alias', 'alias')
+        file_append_once('{0}/.bashrc'.format(get_home_folder()), "if [ -f ~/.aliases ]; then\n. ~/.aliases\nfi", '~/.aliases')
