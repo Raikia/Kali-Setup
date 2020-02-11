@@ -32,11 +32,11 @@ class InstallerTemplate:
         if self._DOWNLOAD_LINK is None:
             print_error("CobaltStrike license is invalid now!", 1)
             return
-        file_download(self._DOWNLOAD_LINK, "~/cobaltstrike.tgz")
+        file_download(self._DOWNLOAD_LINK, "{0}/cobaltstrike.tgz".format(get_home_folder()))
         print_status("Decompressing cobaltstrike", 1)
-        run_command("tar -zxf ~/cobaltstrike.tgz -C /opt/")
-        run_command("rm ~/cobaltstrike.tgz")
-        file_write("~/.cobaltstrike.license", self._LICENSE)
+        run_command("tar -zxf {0}/cobaltstrike.tgz -C /opt/".format(get_home_folder()))
+        run_command("rm {0}/cobaltstrike.tgz".format(get_home_folder()))
+        file_write("{0}/.cobaltstrike.license".format(get_home_folder()), self._LICENSE)
         print_status("Updating cobaltstrike to licensed version", 1)
         run_command("cd /opt/cobaltstrike/; ./update")
         print_success("Done installing cobaltstrike!", 1)
