@@ -175,7 +175,7 @@ class Installer:
             if path == "":
                 print_error("Invalid shell: '{0}'".format(default_shell), 1)
             else:
-                run_command('chsh -s "{0}" "{0}"'.format(path, get_user()))
+                run_command('chsh -s "{0}" "{1}"'.format(path, get_user()))
                 run_command('chsh -s "{0}" root'.format(path))
                 print_success("Done!", 1)
     
