@@ -33,7 +33,7 @@ def print_warning(msg, indent=0):
     print(" "*(indent*4) + _PRINTER_YELLOW + " [!] " + _PRINTER_RESET + msg)
 
 def print_error(msg, indent=0):
-    print(" "*(indent*4) + _PRINTER_RED + " [-] " + msg + _PRINTER_RESET)
+    print(" "*(indent*4) + _PRINTER_RED + " [-] Error: " + msg + _PRINTER_RESET)
 
 def print_status(msg, indent=0):
     print(" "*(indent*4) + _PRINTER_WHITE + " [~] " + _PRINTER_RESET + msg)
