@@ -37,6 +37,7 @@ class InstallerTemplate:
         run_command("tar -zxf {0}/cobaltstrike.tgz -C /opt/".format(get_home_folder()))
         run_command("rm {0}/cobaltstrike.tgz".format(get_home_folder()))
         file_write("{0}/.cobaltstrike.license".format(get_home_folder()), self._LICENSE)
+        file_write("/root/.cobaltstrike.license", self._LICENSE)
         print_status("Updating cobaltstrike to licensed version", 1)
         run_command("cd /opt/cobaltstrike/; ./update")
         print_success("Done installing cobaltstrike!", 1)

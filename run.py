@@ -10,6 +10,10 @@ from modules.common import installer
 def main():
     if os.geteuid() != 0:
         print_error("You must run this script as root!")
+        print_error("Run:  sudo -E {0}".format(os.path.basename(__file__)))
+        sys.exit(1)
+    if os.getenv('PWD') is None:
+        print_error("You have to run this script with 'sudo -E'. You are probably missing the -E parameter.")
         sys.exit(1)
     config_file_location = None
     if len(sys.argv) == 2:

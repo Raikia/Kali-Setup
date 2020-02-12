@@ -53,7 +53,7 @@ def command_exists(cmd):
     return os.system("which {0} > /dev/null 2>&1".format(cmd.split(" ")[0])) == 0
 
 def run_command(cmd, safe=False, show_error=True, as_user=False):
-    cmd_run = "{0}{1} {2}".format("sudo -u {0} ".format(get_user()) if as_user else "", cmd, " > /dev/null 2>&1" if not _VERBOSE else "")
+    cmd_run = "{0}{1} {2}".format("sudo -E -u {0} ".format(get_user()) if as_user else "", cmd, " > /dev/null 2>&1" if not _VERBOSE else "")
     if _DRY_RUN and not safe:
         print_status("Would have run: " + cmd_run, 1)
         ret = 0

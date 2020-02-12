@@ -19,10 +19,10 @@ class InstallerTemplate:
         print_success("Done!", 1)
 
         print_status("Setting audio level to 0", 1)
-        run_command("systemctl --user enable pulseaudio")
-        run_command("systemctl --user start pulseaudio")
-        run_command("pactl set-sink-mute 0 0")
-        run_command("pactl set-sink-volume 0 25%")
+        run_command("systemctl --user enable pulseaudio", as_user=True)
+        run_command("systemctl --user start pulseaudio", as_user=True)
+        run_command("pactl set-sink-mute 0 0", as_user=True)
+        run_command("pactl set-sink-volume 0 25%", as_user=True)
         print_success("Done!", 1)
 
         print_status("Setting grub boot timeout to 1 second", 1)
@@ -40,8 +40,8 @@ class InstallerTemplate:
         print_success("Done", 1)
 
         print_status("Disabling screensaver", 1)
-        run_command("xset s 0 0")
-        run_command("xset s off")
+        run_command("xset s 0 0", as_user=True)
+        run_command("xset s off", as_user=True)
         file_append_once('{0}/.xinitrc'.format(get_home_folder()), "xset s off")
         file_append_once('{0}/.xinitrc'.format(get_home_folder()), "xset b off")
         if command_exists('gsettings'):
