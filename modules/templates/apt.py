@@ -57,7 +57,7 @@ class InstallerTemplate:
         "Installing ruler": ["GOPATH=/opt/ruler go get github.com/sensepost/ruler", "ln -s /opt/ruler/bin/ruler /usr/local/bin"],
         "Updating IEEE oui list": ["airodump-ng-oui-update"],
         "Adding index to web server": ['echo "It works" > /var/www/html/index.html'],
-        "Generating SSH key": ["ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsa -P ''"],
+        "Generating SSH key": ["sudo -E -u {0} ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsa -P ''".format(get_user())],
     }
 
     def check(self, config):
