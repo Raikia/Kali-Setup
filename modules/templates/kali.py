@@ -15,7 +15,7 @@ class InstallerTemplate:
             run_command("apt -qq -y update")
             run_command("DEBIAN_FRONTEND='noninteractive' apt-get -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' dist-upgrade --fix-missing")
         print_status("Installing full Kali", 1)
-        apt_install('kali-linux-full')
+        apt_install('kali-linux-large')
         print_success("Done!", 1)
 
         print_status("Setting audio level to 0", 1)
