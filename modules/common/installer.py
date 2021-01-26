@@ -135,19 +135,23 @@ class Installer:
             print_status("Installing desktop environment: {0}".format(new_de), 1)
             if new_de == "kde":
                 apt_install("kali-desktop-kde")
+                run_command('update-alternatives --set x-session-manager /usr/bin/startplasma-x11')
             elif new_de == "xfce":
                 apt_install("kali-desktop-xfce")
+                run_command('update-alternatives --set x-session-manager /usr/bin/startxfce4')
             elif new_de == "gnome":
                 apt_install("kali-desktop-gnome")
+                run_command('update-alternatives --set x-session-manager /usr/bin/gnome-session')
             elif new_de == "i3":
                 apt_install("kali-desktop-i3")
             elif new_de == "lxde":
                 apt_install("kali-desktop-lxde")
+                run_command('update-alternatives --set x-session-manager /usr/bin/startlxde')
             else:
                 print_error("Unknown option...",1)
             print_success("Done!", 1)
 
-        print_status("Ensuring core and lvie are installed...", 1)
+        print_status("Ensuring core and live are installed...", 1)
         apt_install(["kali-linux-core", "kali-desktop-live"])
         print_success("Done!", 1)
 
