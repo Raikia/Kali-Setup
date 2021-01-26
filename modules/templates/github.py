@@ -55,8 +55,8 @@ class InstallerTemplate:
     _ADDITIONAL_INSTRUCTIONS = {
         'Raikia/CredNinja': ['ln -s /opt/raikia_credninja-git/CredNinja.py /usr/local/bin/credninja'],
         'PowerShellEmpire/Empire': ['export STAGING_KEY=random; cd ./setup; bash ./install.sh'],
-        'ChrisTruncer/EyeWitness': ['cd ./setup/; bash ./setup.sh'],
-        'HarmJ0y/TrustVisualizer': ['pip install networkx'],
+        'ChrisTruncer/EyeWitness': ['cd ./Python/setup/; bash ./setup.sh'],
+        'HarmJ0y/TrustVisualizer': ['apt install -y python3-pip; pip install networkx'],
         'Raikia/Misc-scripts': ['ln -s /opt/raikia_misc-scripts-git/np.py /usr/local/bin/np'],
         'rofl0r/proxychains-ng': [
             'cd /opt/rofl0r_proxychains-ng-git/; git pull -q', 

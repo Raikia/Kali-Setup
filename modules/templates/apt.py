@@ -54,7 +54,7 @@ class InstallerTemplate:
     }
 
     _COMMANDS_AFTER = {
-        "Installing ruler": ["GOPATH=/opt/ruler go get github.com/sensepost/ruler", "ln -s /opt/ruler/bin/ruler /usr/local/bin"],
+        "Installing ruler": ["GO111MODULE=on GOPATH=/opt/ruler go get github.com/sensepost/ruler", "ln -s /opt/ruler/bin/ruler /usr/local/bin"],
         "Updating IEEE oui list": ["airodump-ng-oui-update"],
         "Adding index to web server": ['echo "It works" > /var/www/html/index.html'],
         "Generating SSH key": ["sudo -E -u {0} ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsa -P ''".format(get_user())],
